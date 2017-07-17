@@ -1,0 +1,33 @@
+{% extends "layout_template.html" %}
+
+{% block title %}
+    List FPGA Models
+{% endblock %}
+
+{% block content %}
+
+    <h2>List FPGA Models</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Producer</th>
+            <th>Designation</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fpga_model in object_list %}
+            <tr>
+                <!-- Caution! You have to use the names that django assigns for the fields!
+                 See the 'name' field in the model declaration!-->
+                <td class="td-id">{{ fpga_model.id }}</td>
+                <td>{{ fpga_model.producer.name }}</td>
+                <td>{{ fpga_model.designation }}</td>
+                <td><a class="danger_link" href={% url 'delete_fpga_model' fpga_model.id %}>Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

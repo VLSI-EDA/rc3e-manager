@@ -1,0 +1,35 @@
+{% extends "layout_template.html" %}
+
+{% block title %}
+    Available Nodes
+{% endblock %}
+
+{% block content %}
+
+    <h2>Available Nodes</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>IP</th>
+            <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for node in object_list %}
+            <tr>
+                <!-- Caution! You have to use the names that django assigns for the fields!
+                 See the 'name' field in the model declaration!-->
+                <td class="td-id">{{ node.id }}</td>
+                <td>{{ node.name }}</td>
+                <td>{{ node.ip }}</td>
+                <td class="td-textfield">{{ node.comment }}</td>
+                <td><a class="danger_link" href={% url 'delete_node' node.id %}>Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

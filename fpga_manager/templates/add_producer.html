@@ -1,0 +1,22 @@
+{% extends "layout_template.html" %}
+
+{% block title %}
+    Add Producer
+{% endblock %}
+
+{% block content %}
+
+    <h2>Add Producer</h2>
+
+    <form id="add_form" action="" method="post">
+        {% csrf_token %}
+
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <button type="submit" value="Save">Add new Producer</button>
+
+    </form>
+
+{% endblock %}

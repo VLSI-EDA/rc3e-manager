@@ -1,0 +1,45 @@
+{% extends "layout_template.html" %}
+
+{% block title %}
+    Add FPGA
+{% endblock %}
+
+{% block content %}
+
+    <h2>Add FPGA</h2>
+
+    <form id="add_form" action="" method="post">
+        {% csrf_token %}
+
+        <table>
+            <tr>
+                <th>Node</th>
+                <td>{{ add_form.node }}</td>
+            </tr>
+            <tr>
+                <th>FPGA Model</th>
+                <td>{{ add_form.fpga_model }}</td>
+            </tr>
+            <tr>
+                <th>Device PCI</th>
+                <td>{{ add_form.device_pci_system }}:
+                    {{ add_form.device_pci_bus }}:
+                    {{ add_form.device_pci_device }}.
+                    {{ add_form.device_pci_function }}
+                </td>
+            </tr>
+            <tr>
+                <th>Node PCI</th>
+                <td>{{ add_form.node_pci_system }}:
+                    {{ add_form.node_pci_bus }}:
+                    {{ add_form.node_pci_device }}.
+                    {{ add_form.node_pci_function }}
+                </td>
+            </tr>
+        </table>
+
+        <button type="submit" value="Save">Add new FPGA</button>
+
+    </form>
+
+{% endblock %}

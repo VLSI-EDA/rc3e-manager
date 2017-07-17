@@ -1,0 +1,42 @@
+{% extends "layout_template.html" %}
+
+{% block title %}
+    Delete Producer
+{% endblock %}
+
+{% block content %}
+
+    <h2>Delete Producer</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ producer.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ producer.name }}</td>
+        </tr>
+    </table>
+
+    <div class="danger_text">
+        <strong>Caution!</strong><br>
+        This will also delete
+        <ul>
+            <li>All FPGA models related to this producer</li>
+            <li>All FPGAs of the above models</li>
+            <li>All reservations made on above FPGAs</li>
+        </ul>
+        <br>
+        Are you sure?
+    </div>
+
+    <a href="{% url 'list_nodes' %}">Abort</a>
+
+    <form id="delete_form" action="" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Confirm" class="danger_button">Delete</button>
+    </form>
+
+
+{% endblock %}

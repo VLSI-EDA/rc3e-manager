@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/colors.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/layout.css" %}"/>
+</head>
+<body>
+
+<nav>
+    <table>
+        <tr>
+            <td><a href={% url 'list_nodes' %}>Nodes</a></td>
+            <td><a href={% url 'add_node' %}> Add</a></td>
+        </tr>
+        <tr>
+            <td><a href={% url 'list_producers' %}>Producers</a></td>
+            <td><a href={% url 'add_producer' %}> Add</a></td>
+        </tr>
+        <tr>
+            <td><a href={% url 'list_fpga_models' %}>FPGA Models</a></td>
+            <td><a href={% url 'add_fpga_model' %}> Add</a></td>
+        </tr>
+    </table>
+</nav>
+
+<div class="content">
+    {% block content %} {% endblock %}
+</div>
+</body>
+</html>

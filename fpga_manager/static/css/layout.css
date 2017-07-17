@@ -1,0 +1,41 @@
+
+.content {
+    float: left;
+    padding: 1em;
+    height: 100%;
+}
+
+nav {
+    float: left;
+    width: 20em;
+    height: 100%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-weight: bold;
+}
+
+tr {
+    vertical-align: top;
+}
+
+.td-id {
+    text-align: right;
+}
+
+.td-textfield {
+    max-width: 40em;
+}
+
+#abort_form {
+    display: inline;
+}
+
+#delete_form {
+    display: inline;
+}

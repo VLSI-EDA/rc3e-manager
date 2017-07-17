@@ -1,0 +1,45 @@
+{% extends "layout_template.html" %}
+
+{% block title %}
+    Delete Producer
+{% endblock %}
+
+{% block content %}
+
+    <h2>Delete Producer</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ fpga_model.id }}</td>
+        </tr>
+        <tr>
+            <th>Producer</th>
+            <td>{{ fpga_model.producer.name }}</td>
+        </tr>
+        <tr>
+            <th>Designation</th>
+            <td>{{ fpga_model.designation }}</td>
+        </tr>
+    </table>
+
+    <div class="danger_text">
+        <strong>Caution!</strong><br>
+        This will also delete
+        <ul>
+            <li>All FPGAs of this models</li>
+            <li>All reservations made on above FPGAs</li>
+        </ul>
+        <br>
+        Are you sure?
+    </div>
+
+    <a href="{% url 'list_fpga_models' %}">Abort</a>
+
+    <form id="delete_form" action="" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Confirm" class="danger_button">Delete</button>
+    </form>
+
+
+{% endblock %}

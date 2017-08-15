@@ -13,7 +13,7 @@ def add_fpga(request):
         if filled_out_form.is_valid():
             cleaned_data = filled_out_form.cleaned_data
 
-            # Create the Device
+            # Create the Device PCI
             device_pci_system = cleaned_data.get("device_pci_system")
             device_pci_bus = cleaned_data.get("device_pci_bus")
             device_pci_device = cleaned_data.get("device_pci_device")
@@ -25,10 +25,25 @@ def add_fpga(request):
                                     function=device_pci_function)
             device_pci.save()
 
+            # Create the Node PCI
+            node_pci_system = cleaned_data.get("node_pci_system")
+            node_pci_bus = cleaned_data.get("node_pci_bus")
+            node_pci_device = cleaned_data.get("node_pci_device")
+            node_pci_function = cleaned_data.get("node_pci_function")
+
+            node_pci = PciAddress(system=node_pci_system,
+                                  bus=node_pci_bus,
+                                  device=node_pci_device,
+                                  function=node_pci_function)
+            node_pci.save()
+
+            # Create the FPGA itself
             node = cleaned_data.get("node")
             fpga_model = cleaned_data.get("fpga_model")
 
-            new_fpga = Fpga(node=node, fpga_model=fpga_model)
+            # TODO create all the region entries based on the Fpga model
+
+            new_fpga = Fpga(node=node, fpga_model=fpga_model, node_pci=node_pci, device_pci=device_pci)
             new_fpga.save()
 
             return HttpResponseRedirect(reverse("welcome"))

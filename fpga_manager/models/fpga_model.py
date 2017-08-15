@@ -3,6 +3,11 @@ from django.db import models
 
 
 class FpgaModel(models.Model):
+    """
+    By design each FPGA model is considered to only consist of one type of region and thus be homogeneous.
+    Models with multiple different region types are not supported.
+    """
+
     producer = models.ForeignKey(
         'Producer',
         name="producer",

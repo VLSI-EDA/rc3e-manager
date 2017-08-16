@@ -1,14 +1,24 @@
+:root {
+    --bg-color: lightskyblue;
+    --alt-bg-color: lightblue;
+}
 
-.content {
-    float: left;
+body {
+    background-color: var(--bg-color);
+}
+
+header {
+    background-color: var(--alt-bg-color);
+    clear: both;
     padding: 1em;
-    height: 100%;
+    text-align: center;
 }
 
 nav {
     float: left;
     width: 20em;
     height: 100%;
+    background: var(--alt-bg-color);
 }
 
 table {
@@ -18,10 +28,58 @@ table {
 th {
     text-align: left;
     font-weight: bold;
+    padding: 0.3em 0.5em;
 }
 
 tr {
     vertical-align: top;
+}
+
+tr:hover {
+    background-color: var(--alt-bg-color);
+}
+
+td {
+    padding: 0.3em 0.5em;
+}
+
+button {
+    font-size: inherit;
+    color: black;
+    background-color: lightgray;
+    border: none;
+    padding: 0.15em 1em;
+    margin: 5px;
+}
+
+button:hover {
+    color: black;
+    background-color: lightgray;
+    border: solid 1px;
+    margin: 4px;
+}
+
+a {
+    font-size: inherit;
+    text-decoration: none;
+    color: black;
+    background-color: lightgray;
+    border: none;
+    padding: 0.15em 0.5em;
+    margin: 5px;
+}
+
+a:hover {
+    color: black;
+    background-color: lightgray;
+    border: solid 1px;
+    margin: 4px;
+}
+
+.content {
+    float: left;
+    padding: 1em;
+    height: 100%;
 }
 
 .td-id {
@@ -35,6 +93,54 @@ tr {
 .td-pci_address {
     max-width: 12em;
     font-family: monospace;
+    vertical-align: center;
+}
+
+.danger_button {
+    color: white;
+    background-color: darkred;
+    font-weight: bold;
+}
+
+.danger_button:hover {
+    color: white;
+    background-color: darkred;
+    /* Flashing red border*/
+    animation-name: danger_flash;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.danger_link {
+    color: white;
+    background-color: darkred;
+    font-weight: bold;
+}
+
+.danger_link:hover {
+    color: white;
+    background-color: darkred;
+    /* Flashing red border*/
+    animation-name: danger_flash;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes danger_flash {
+    0% {
+        background-color: darkred;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: darkred;
+    }
+}
+
+.danger_text {
+    border: solid darkred 0.15em;
+    padding: 1em;
 }
 
 #abort_form {

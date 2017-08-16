@@ -97,12 +97,3 @@ def add_fpga(request):
 #     return render(request, "list_nodes.html", {
 #         "nodes": nodes,
 #     })
-
-
-# def show_fpga(request, fpga_id):
-#     # TODO check if the requested FPGA exists. Otherwise return an error page.
-#     return render(request, "show_fpga.html", {"fpga_id": fpga_id})
-
-
-# class StaticView(TemplateView):
-#     template_name = "static.html"

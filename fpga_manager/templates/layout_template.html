@@ -5,10 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static "css/colors.css" %}"/>
     <link rel="stylesheet" href="{% static "css/layout.css" %}"/>
 </head>
 <body>
+
+<header>
+    {% block header %}{% endblock %}
+</header>
 
 <nav>
     <table>

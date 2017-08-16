@@ -32,6 +32,11 @@ tr {
     max-width: 40em;
 }
 
+.td-pci_address {
+    max-width: 12em;
+    font-family: monospace;
+}
+
 #abort_form {
     display: inline;
 }

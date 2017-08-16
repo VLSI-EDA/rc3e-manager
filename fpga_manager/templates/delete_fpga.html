@@ -6,20 +6,28 @@
 
 {% block content %}
 
-    <h2>Delete FPGA model</h2>
+    <h2>Delete FPGA</h2>
 
     <table>
         <tr>
             <th>ID</th>
-            <td>{{ fpga_model.id }}</td>
+            <td>{{ fpga.id }}</td>
         </tr>
         <tr>
-            <th>Producer</th>
-            <td>{{ fpga_model.producer.name }}</td>
+            <th>Node</th>
+            <td>{{ fpga.node }}</td>
         </tr>
         <tr>
-            <th>Designation</th>
-            <td>{{ fpga_model.designation }}</td>
+            <th>Model</th>
+            <td>{{ fpga.fpga_model }}</td>
+        </tr>
+        <tr>
+            <th>Node PCI</th>
+            <td>{{ fpga.node_pci }}</td>
+        </tr>
+        <tr>
+            <th>Device PCI</th>
+            <td>{{ fpga.device_pci }}</td>
         </tr>
     </table>
 
@@ -27,14 +35,14 @@
         <strong>Caution!</strong><br>
         This will also delete
         <ul>
-            <li>All FPGAs of this models</li>
-            <li>All reservations made on above FPGAs</li>
+            <li>All vFPGAs associated with this FPGA</li>
+            <li>All reservations made on above vFPGAs</li>
         </ul>
         <br>
         Are you sure?
     </div>
 
-    <a href="{% url 'list_fpga_models' %}">Abort</a>
+    <a href="{% url 'list_fpgas' %}">Abort</a>
 
     <form id="delete_form" action="" method="post">
         {% csrf_token %}

@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 
 from fpga_manager import views
-from fpga_manager.models import FpgaModel, Node, Producer
+from fpga_manager.models import Fpga, FpgaModel, Node, Producer
 
 urlpatterns = [
     # FPGA manager views
@@ -92,6 +92,21 @@ urlpatterns = [
 
     # --- FPGA related URLs ---
 
+    url(r'^fpgas/list/',
+        ListView.as_view(
+            model=Fpga,
+            context_object_name='object_list',
+            template_name="list_fpgas.html"
+        ), name='list_fpgas'),
+
     url(r'^fpgas/create/', views.add_fpga, name='add_fpga'),
+
+    url(r'^fpgas/delete/(?P<pk>[\d]+)/$',
+        DeleteView.as_view(
+            model=Fpga,
+            context_object_name='fpga',
+            template_name='delete_fpga.html',
+            success_url=reverse_lazy('list_fpgas'),
+        ), name='delete_fpga'),
 
 ]

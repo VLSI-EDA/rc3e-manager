@@ -53,6 +53,8 @@ def add_fpga(request):
 
     return render(request, "add_fpga.html", {"add_form": filled_out_form})
 
+# TODO delete fpgas properly including related PCI addresses
+
 # def overview(request):
 #
 #     text = "<h1>Available FPGAs</h1>"

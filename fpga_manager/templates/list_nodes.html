@@ -4,9 +4,15 @@
     Available Nodes
 {% endblock %}
 
+{% block header %}
+    <h1>Available Nodes</h1>
+{% endblock %}
+
 {% block content %}
 
-    <h2>Available Nodes</h2>
+    <p>
+        {{ object_list|length }} entries in total. <a href={% url 'add_node' %}> Add a new node</a><br>
+    </p>
 
     <table>
         <thead>
@@ -15,6 +21,7 @@
             <th>Name</th>
             <th>IP</th>
             <th>Comment</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

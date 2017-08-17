@@ -1,17 +1,13 @@
-{% load static %}
+{% extends "layout_template.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to RC3E</title>
-    <link rel="stylesheet" href="{% static "css/layout.css" %}"/>
-</head>
-<body>
+{% block title %}
+    Welcome
+{% endblock %}
 
-<div id="main">
-    <h1>All your FPGAs in one cloud!</h1>
-</div>
+{% block header %}
+    <h1>Welcome to the RC3E FPGA Manager</h1>
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    
+{% endblock %}

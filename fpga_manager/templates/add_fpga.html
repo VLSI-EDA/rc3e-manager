@@ -4,9 +4,11 @@
     Add FPGA
 {% endblock %}
 
-{% block content %}
+{% block header %}
+    <h1>Add FPGA</h1>
+{% endblock %}
 
-    <h2>Add FPGA</h2>
+{% block content %}
 
     <form id="add_form" action="" method="post">
         {% csrf_token %}

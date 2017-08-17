@@ -1,18 +1,25 @@
 {% extends "layout_template.html" %}
 
 {% block title %}
-    List Producers
+    Available Producers
+{% endblock %}
+
+{% block header %}
+    <h1>Available Producers</h1>
 {% endblock %}
 
 {% block content %}
 
-    <h2>List Producers</h2>
+    <p>
+        {{ object_list|length }} entries in total. <a href={% url 'add_producer' %}> Add a new producer</a><br>
+    </p>
 
     <table>
         <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

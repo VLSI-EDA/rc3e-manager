@@ -16,9 +16,19 @@ header {
 
 nav {
     float: left;
-    width: 20em;
     height: 100%;
     background: var(--alt-bg-color);
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav li {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
 }
 
 table {

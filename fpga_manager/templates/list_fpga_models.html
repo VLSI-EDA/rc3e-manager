@@ -4,9 +4,15 @@
     List FPGA Models
 {% endblock %}
 
+{% block header %}
+    <h1>Available FPGA Models</h1>
+{% endblock %}
+
 {% block content %}
 
-    <h2>List FPGA Models</h2>
+    <p>
+        {{ object_list|length }} entries in total. <a href={% url 'add_fpga_model' %}> Add a new FPGA Model</a><br>
+    </p>
 
     <table>
         <thead>
@@ -14,6 +20,7 @@
             <th>ID</th>
             <th>Producer</th>
             <th>Designation</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

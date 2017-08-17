@@ -26,7 +26,9 @@ class FpgaModel(models.Model):
 
     region_type = models.ForeignKey(
         'RegionType',
-        name="region_type"
+        name="region_type",
+        on_delete=models.CASCADE,
+        blank=False,
     )
 
     region_count = models.IntegerField(

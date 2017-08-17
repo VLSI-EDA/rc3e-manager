@@ -3,15 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 
 from fpga_manager import views
-from fpga_manager.models import Fpga, FpgaModel, Node, Producer
+from fpga_manager.models import Fpga, FpgaModel, Node, Producer, RegionType
 
 urlpatterns = [
-    # FPGA manager views
-    # url(r'^overview/',          views.overview, name='overview'),
-    # url(r'^show_fpga/(?P<fpga_id>(\d+))/',   views.show_fpga, name='show_fpga'),
-    # url(r'^manage_nodes/', views.manage_nodes, name='manage_nodes'),
-    # url(r'^list_nodes/', views.list_nodes, name='list_nodes'),
-    # url(r'^static/', views.StaticView, name='static'),
 
     # TODO All the update views
 
@@ -109,4 +103,29 @@ urlpatterns = [
             success_url=reverse_lazy('list_fpgas'),
         ), name='delete_fpga'),
 
+    # --- Region Type related URLs ---
+
+    url(r'^region_types/create/',
+        CreateView.as_view(
+            model=RegionType,
+            context_object_name='form',
+            fields='__all__',
+            template_name='add_region_type.html',
+            success_url=reverse_lazy('list_region_types'),
+        ), name='add_region_type'),
+
+    url(r'^region_types/list/',
+        ListView.as_view(
+            model=RegionType,
+            context_object_name='object_list',
+            template_name="list_region_types.html"
+        ), name='list_region_types'),
+
+    url(r'^region_types/delete/(?P<pk>[\d]+)/$',
+        DeleteView.as_view(
+            model=RegionType,
+            context_object_name='region_type',
+            template_name='delete_region_type.html',
+            success_url=reverse_lazy('list_region_types'),
+        ), name='delete_region_type'),
 ]

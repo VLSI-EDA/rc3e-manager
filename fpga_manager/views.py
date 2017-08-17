@@ -46,7 +46,7 @@ def add_fpga(request):
             new_fpga = Fpga(node=node, fpga_model=fpga_model, node_pci=node_pci, device_pci=device_pci)
             new_fpga.save()
 
-            return HttpResponseRedirect(reverse("welcome"))
+            return HttpResponseRedirect(reverse("list_fpgas"))
 
     else:
         filled_out_form = AddFpgaForm()

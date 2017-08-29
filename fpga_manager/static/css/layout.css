@@ -1,6 +1,7 @@
 :root {
-    --bg-color: lightskyblue;
-    --alt-bg-color: lightblue;
+    --bg-color: #D5D3BF;
+    --alt-bg-color: #C8C5AC;
+    --button-color: #B5B292;
 }
 
 body {
@@ -56,15 +57,13 @@ td {
 button {
     font-size: inherit;
     color: black;
-    background-color: lightgray;
+    background-color: var(--button-color);
     border: none;
     padding: 0.15em 1em;
     margin: 5px;
 }
 
 button:hover {
-    color: black;
-    background-color: lightgray;
     border: solid 1px;
     margin: 4px;
 }
@@ -73,15 +72,13 @@ a {
     font-size: inherit;
     text-decoration: none;
     color: black;
-    background-color: lightgray;
+    background-color: var(--button-color);
     border: none;
     padding: 0.15em 0.5em;
     margin: 5px;
 }
 
 a:hover {
-    color: black;
-    background-color: lightgray;
     border: solid 1px;
     margin: 4px;
 }
@@ -113,8 +110,6 @@ a:hover {
 }
 
 .danger_button:hover {
-    color: white;
-    background-color: darkred;
     /* Flashing red border*/
     animation-name: danger_flash;
     animation-duration: 2s;
@@ -128,8 +123,6 @@ a:hover {
 }
 
 .danger_link:hover {
-    color: white;
-    background-color: darkred;
     /* Flashing red border*/
     animation-name: danger_flash;
     animation-duration: 2s;

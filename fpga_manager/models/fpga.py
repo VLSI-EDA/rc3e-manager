@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 
 class Fpga(models.Model):
@@ -40,3 +42,12 @@ class Fpga(models.Model):
 
     class Meta:
         db_table = "fpgas"
+
+    # noinspection PyUnusedLocal
+    # **kwargs is required but not used.
+    @staticmethod
+    @receiver(post_delete)
+    def remove_pci(sender, instance, **kwargs):
+        if sender == Fpga:
+            instance.node_pci.delete()
+            instance.device_pci.delete()

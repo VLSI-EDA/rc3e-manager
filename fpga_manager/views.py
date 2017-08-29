@@ -61,7 +61,7 @@ def show_fpga(request, pk):
     try:
         fpga = Fpga.objects.get(pk=pk)
     except Fpga.DoesNotExist:
-        raise Http404("No such FPGA")
+        raise Http404("No FPGA with this id")
 
     regions = Region.objects.filter(in_fpga=fpga)
     context = {
@@ -70,5 +70,4 @@ def show_fpga(request, pk):
     }
     return render(request, "view_fpga.html", context)
 
-# TODO delete fpgas properly including related PCI addresses and regions
-# TODO create detail views for models, Fpgas
+# TODO create detail views for models

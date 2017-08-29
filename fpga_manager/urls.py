@@ -93,7 +93,9 @@ urlpatterns = [
             template_name="list_fpgas.html"
         ), name='list_fpgas'),
 
-    url(r'^fpgas/create/', views.add_fpga, name='add_fpga'),
+    url(r'^fpgas/create/',
+        views.add_fpga,
+        name='add_fpga'),
 
     url(r'^fpgas/delete/(?P<pk>[\d]+)/$',
         DeleteView.as_view(
@@ -102,6 +104,10 @@ urlpatterns = [
             template_name='delete_fpga.html',
             success_url=reverse_lazy('list_fpgas'),
         ), name='delete_fpga'),
+
+    url(r'^fpgas/view/(?P<pk>[\d]+)/$',
+        views.show_fpga,
+        name='view_fpga'),
 
     # --- Region Type related URLs ---
 

@@ -1,9 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
 
 from fpga_manager.forms import AddFpgaForm
-from fpga_manager.models import Fpga, PciAddress
+from fpga_manager.models import Fpga, PciAddress, Region
 
 
 def add_fpga(request):
@@ -38,13 +38,16 @@ def add_fpga(request):
             node_pci.save()
 
             # Create the FPGA itself
-            node = cleaned_data.get("node")
-            fpga_model = cleaned_data.get("fpga_model")
+            node_key = cleaned_data.get("node")
+            fpga_model_key = cleaned_data.get("fpga_model")
 
-            # TODO create all the region entries based on the Fpga model
-
-            new_fpga = Fpga(node=node, fpga_model=fpga_model, node_pci=node_pci, device_pci=device_pci)
+            new_fpga = Fpga(node=node_key, fpga_model=fpga_model_key, node_pci=node_pci, device_pci=device_pci)
             new_fpga.save()
+
+            # Create the regions within the FPGA
+            for i in range(0, fpga_model_key.region_count):
+                region = Region(region_type=fpga_model_key.region_type, in_fpga=new_fpga, index=i)
+                region.save()
 
             return HttpResponseRedirect(reverse("list_fpgas"))
 
@@ -53,47 +56,19 @@ def add_fpga(request):
 
     return render(request, "add_fpga.html", {"add_form": filled_out_form})
 
-# TODO delete fpgas properly including related PCI addresses
 
-# def overview(request):
-#
-#     text = "<h1>Available FPGAs</h1>"
-#
-#     fpgas = Fpga.objects.all()
-#
-#     for current in fpgas:
-#         text += str(current.id) + "<br/>"
-#
-#     return HttpResponse(text)
+def show_fpga(request, pk):
+    try:
+        fpga = Fpga.objects.get(pk=pk)
+    except Fpga.DoesNotExist:
+        raise Http404("No such FPGA")
 
+    regions = Region.objects.filter(in_fpga=fpga)
+    context = {
+        "fpga": fpga,
+        "regions": regions,
+    }
+    return render(request, "view_fpga.html", context)
 
-# def manage_nodes(request):
-#
-#     add_node_modelform = modelform_factory(Node, form=NodeForm)
-#
-#     if request.method == "POST":
-#         add_node_form = add_node_modelform(request.POST)
-#
-#         if add_node_form.is_valid():
-#             name = add_node_form.cleaned_data.get("name")
-#             ip = add_node_form.cleaned_data.get("ip")
-#             comment = add_node_form.cleaned_data.get("comment")
-#
-#             new_node = Node(name=name, ip=ip, comment=comment)
-#             new_node.save()
-#
-#             return HttpResponseRedirect(reverse("list_nodes"))
-#
-#     else:
-#         add_node_form = add_node_modelform()
-#
-#     return render(request, "manage_nodes.html", {
-#         "add_node_form": add_node_form,
-#     })
-
-
-# def list_nodes(request):
-#     nodes = get_list_or_404(Node)
-#     return render(request, "list_nodes.html", {
-#         "nodes": nodes,
-#     })
+# TODO delete fpgas properly including related PCI addresses and regions
+# TODO create detail views for models, Fpgas

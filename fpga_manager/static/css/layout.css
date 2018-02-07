@@ -2,6 +2,7 @@
     --bg-color: #D5D3BF;
     --alt-bg-color: #C8C5AC;
     --button-color: #B5B292;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 body {
@@ -12,7 +13,6 @@ header {
     background-color: var(--alt-bg-color);
     clear: both;
     padding: 1em;
-    text-align: center;
 }
 
 nav {
@@ -79,8 +79,20 @@ a {
 }
 
 a:hover {
-    border: solid 1px;
+    border: solid 1px var(--button-color);
     margin: 4px;
+    background-color: var(--bg-color);
+}
+
+div.header_title {
+    text-align: center;
+}
+
+div.user_detail {
+    float: right;
+    display: inline;
+    padding: 1em;
+    text-align: left;
 }
 
 .content {

@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 
@@ -8,6 +9,10 @@ from fpga_manager.models import Fpga, FpgaModel, Node, Producer, RegionType
 urlpatterns = [
 
     # TODO All the update views
+
+    # --- General purpose URLs ---
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
 
     # --- Node-related URLs ---
     url(r'^nodes/list/',

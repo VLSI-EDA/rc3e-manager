@@ -10,7 +10,21 @@
 <body>
 
 <header>
-    {% block header %}{% endblock %}
+
+    <div class="user_detail">
+        {% if request.user.is_authenticated %}
+            Logged in as <b>{{ request.user }}</b>
+            <a href={% url 'logout' %}>Log out</a>
+        {% else %}
+            Not logged in
+            <a href={% url 'login' %}>Log in</a>
+        {% endif %}
+    </div>
+
+    <div class="header_title">
+        {% block header %}{% endblock %}
+    </div>
+
 </header>
 
 <nav>

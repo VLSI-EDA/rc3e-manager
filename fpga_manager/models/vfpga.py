@@ -12,10 +12,21 @@ class VFpga(models.Model):
     """
 
     # TODO user
-    # TODO time
+
+    creation_date = models.DateField(
+        name="creation_date",
+        verbose_name="Reservation Start Date",
+        blank=False,
+    )
+
+    termination_date = models.DateField(
+        name="termination_date",
+        verbose_name="Reservation End Date",
+        blank=False,
+    )
 
     memory_device_path = models.FilePathField(
-        name='memory_device_path',
+        name="memory_device_path",
         verbose_name="Memory Device Path",
         blank=False,
     )

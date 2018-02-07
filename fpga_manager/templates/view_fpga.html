@@ -58,4 +58,24 @@
         </tbody>
     </table>
 
+    <h2>Device variables</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for device_variable in device_variables %}
+            <tr>
+                <!-- Caution! You have to use the names that django assigns for the fields!
+                 See the 'name' field in the model declaration !-->
+                <td>{{ device_variable.name }}</td>
+                <td>{{ device_variable.value }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from fpga_manager.forms import AddFpgaForm
-from fpga_manager.models import Fpga, PciAddress, Region
+from fpga_manager.models import Fpga, PciAddress, Region, DeviceVariable
 
 
 def add_fpga(request):
@@ -64,9 +64,12 @@ def show_fpga(request, pk):
         raise Http404("No FPGA with this id")
 
     regions = Region.objects.filter(in_fpga=fpga)
+    device_variables = DeviceVariable.objects.filter(fpga=fpga)
+
     context = {
         "fpga": fpga,
         "regions": regions,
+        "device_variables": device_variables,
     }
     return render(request, "view_fpga.html", context)
 

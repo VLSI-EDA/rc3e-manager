@@ -26,3 +26,6 @@ class RuntimeVariable(models.Model):
         verbose_name="Value",
         blank=False,
     )
+
+    class Meta:
+        db_table = "runtime_variables"

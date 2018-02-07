@@ -22,9 +22,6 @@ class Programmer(models.Model):
         max_length=255,
     )
 
-    script = models.TextField(
-        name="script",
-        verbose_name="Programming Script",
-    )
-
-    # TODO how to deal with the bitfile path that needs to be injected into the script?
+    class Meta:
+        db_table = "programmers"
+        # TODO programmer device path

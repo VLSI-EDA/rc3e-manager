@@ -40,3 +40,6 @@ class DeviceVariable(models.Model):
         verbose_name="Value",
         blank=False,
     )
+
+    class Meta:
+        db_table = "device_variables"

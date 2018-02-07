@@ -25,7 +25,9 @@ class Script(models.Model):
         verbose_name='Script Template'
     )
 
-    # TODO: resolve_device_variables()
+    class Meta:
+        db_table = "scripts"
+        # TODO: resolve_device_variables(device_pk)
     # TODO: resolve_runtime_variables()
     # TODO: compile(vfpga)
     # TODO: execute()

@@ -20,13 +20,13 @@ def create_pci_field(chars):
     )
 
 
-class NodeForm(ModelForm):
-    class Meta:
-        model = Node
-        fields = '__all__'
-
-
 class AddFpgaForm(ModelForm):
+    """
+    The AddFpgaForm class
+    is a custom form class for adding FPGAs.
+    It allows for the input of the PCI addresses split into its component parts.
+    """
+
     class Meta:
         model = Fpga
         fields = ['node', 'fpga_model']
@@ -49,4 +49,4 @@ class AddFpgaForm(ModelForm):
     node_pci_device = create_pci_field(PciAddress.DEVICE_CHARS)
     node_pci_function = create_pci_field(PciAddress.FUNCTION_CHARS)
 
-    # TODO continue ...
+    # The actual setting of values will be handled by views.add_fpga

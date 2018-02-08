@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 
 class VFpga(models.Model):
@@ -17,12 +20,14 @@ class VFpga(models.Model):
         name="creation_date",
         verbose_name="Reservation Start Date",
         blank=False,
+        default=timezone.now()
     )
 
     termination_date = models.DateField(
         name="termination_date",
         verbose_name="Reservation End Date",
         blank=False,
+        default=timezone.now() + timedelta(days=1)
     )
 
     memory_device_path = models.FilePathField(

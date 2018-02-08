@@ -95,8 +95,14 @@ div.user_detail {
     text-align: left;
 }
 
-.content {
-    float: left;
+div.centered_text {
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+}
+
+div.content {
+    overflow: hidden;
     padding: 1em;
     height: 100%;
 }

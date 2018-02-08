@@ -11,6 +11,7 @@ urlpatterns = [
     # TODO All the update views
 
     # --- General purpose URLs ---
+    url(r'^$', views.welcome, name="welcome"),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
 

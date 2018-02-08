@@ -6,6 +6,10 @@ from fpga_manager.forms import AddFpgaForm
 from fpga_manager.models import Fpga, PciAddress, Region, DeviceVariable
 
 
+def welcome(request):
+    return render(request, "welcome.html")
+
+
 def add_fpga(request):
     if request.method == "POST":
         filled_out_form = AddFpgaForm(request.POST)

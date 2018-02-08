@@ -16,6 +16,8 @@ class Fpga(models.Model):
 
     fpga_model = models.ForeignKey(
         'FpgaModel',
+        name="fpga_model",
+        verbose_name="FPGA Model",
         on_delete=models.CASCADE,
         blank=False,
     )

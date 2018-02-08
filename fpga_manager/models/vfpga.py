@@ -14,16 +14,26 @@ class VFpga(models.Model):
     The amount of consecutive regions, including the start region, reserved for this vFPGA.
     """
 
-    # TODO user
+    User = models.get_user_model()
 
-    creation_date = models.DateField(
+    by_user = models.ForeignKey(
+        User,
+        name="by_user",
+        verbose_name="Reservation made by user",
+        on_delete=models.CASCADE,
+        blank=False,
+    )
+
+    # TODO make sure that on deletion of the user all reservations made by him are freed.
+
+    creation_date = models.DateTimeField(
         name="creation_date",
         verbose_name="Reservation Start Date",
         blank=False,
         default=timezone.now()
     )
 
-    termination_date = models.DateField(
+    termination_date = models.DateTimeField(
         name="termination_date",
         verbose_name="Reservation End Date",
         blank=False,

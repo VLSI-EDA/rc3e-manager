@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -10,6 +10,13 @@ class VFpga(models.Model):
     These regions must be consecutive and on the same FPGA. The regions are abstracted into a virtual FPGA.
     The entries are retained after the end of the reservation period for accounting purposes.
 
+    A vFPGA can have the following states:
+        * PENDING - if the reservation was made but the accounting period has not started yet
+        * ACTIVE - if the accounting period has started, but not yet ended
+        * EXPIRED - if the accounting period is over
+
+    NOTE: A vFPGA may only be programmed while in the ACTIVE state.
+
 
     Attribute region_count:
     The amount of consecutive regions, including the start region, reserved for this vFPGA.
@@ -19,6 +26,7 @@ class VFpga(models.Model):
 
     Attribute creation_date:
     The date on which the database entry was created. This does not mark the beginning of accountability.
+    By default, the creation date will be set to django.utils.timezone.now
 
     Attribute reservation_start_date:
     The date upon which the reservation period begins. This does mark the begin of accountability.
@@ -59,6 +67,7 @@ class VFpga(models.Model):
     memory_device_path = models.FilePathField(
         name="memory_device_path",
         verbose_name="Memory Device Path",
+        null=False,
         blank=False,
     )
 
@@ -70,26 +79,37 @@ class VFpga(models.Model):
         blank=False,
     )
 
-    # NOTE that the following fields must be kept consistent with the region table
-    # maybe we don't need them at all?
-
-    start_region = models.ForeignKey(
-        'Region',
-        name="start_region",
-        verbose_name="Start Region",
-        null=False,
-        blank=False,
-    )
-
-    region_count = models.IntegerField(
-        name="region_count",
-        verbose_name="Reserved Region Count",
-        null=False,
-        blank=False,
-        validators=[MinValueValidator(1)],
-    )
-
     class Meta:
         db_table = "v_fpgas"
 
-        # TODO: def clean(self):
+    def clean(self):
+
+        # Assure the correct order of dates
+        if self.creation_date > self.reservation_start_date:
+            raise ValidationError("Reservation can not start in the past.")
+
+        if self.creation_date > self.reservation_end_date:
+            raise ValidationError("Reservation can not end in the past.")
+
+        if self.reservation_start_date > self.reservation_end_date:
+            raise ValidationError("Reservation can not start after it has ended.")
+
+    # Utility functions
+
+    def is_pending(self):
+        if self.reservation_start_date > timezone.now:
+            return True
+        else:
+            return False
+
+    def is_active(self):
+        if self.reservation_start_date < timezone.now < self.reservation_end_date:
+            return True
+        else:
+            return False
+
+    def is_expired(self):
+        if self.reservation_end_date < timezone.now:
+            return True
+        else:
+            return False

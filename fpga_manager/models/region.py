@@ -16,6 +16,9 @@ class Region(models.Model):
     It must be null if the region is currently not reserved.
     """
 
+    class Meta:
+        db_table = "regions"
+
     region_type = models.ForeignKey(
         'RegionType',
         name="region_type",
@@ -39,14 +42,4 @@ class Region(models.Model):
         validators=[MinValueValidator(0)]
     )
 
-    reserved_by = models.ForeignKey(
-        'VFpga',
-        name="reserved_by",
-        verbose_name="Reserved by vFPGA",
-        null=True,
-        blank=False,
-        default=None,
-    )
 
-    class Meta:
-        db_table = "regions"

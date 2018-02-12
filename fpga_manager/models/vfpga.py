@@ -1,5 +1,4 @@
-from datetime import timedelta
-
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
@@ -8,13 +7,25 @@ from django.utils import timezone
 class VFpga(models.Model):
     """ The vFPGA class
     represents a users reservation of one or multiple consecutive regions on an FPGA.
+    These regions must be consecutive and on the same FPGA. The regions are abstracted into a virtual FPGA.
+    The entries are retained after the end of the reservation period for accounting purposes.
 
 
     Attribute region_count:
     The amount of consecutive regions, including the start region, reserved for this vFPGA.
-    """
 
-    User = models.get_user_model()
+    Attribute by_user:
+    A foreign key to the user who made the reservation and who is accountable for it.
+
+    Attribute creation_date:
+    The date on which the database entry was created. This does not mark the beginning of accountability.
+
+    Attribute reservation_start_date:
+    The date upon which the reservation period begins. This does mark the begin of accountability.
+
+    Attribute reservation_end_date:
+    The date upon which the reservation period ends. This does mark the end of accountability.
+    """
 
     by_user = models.ForeignKey(
         User,
@@ -28,16 +39,21 @@ class VFpga(models.Model):
 
     creation_date = models.DateTimeField(
         name="creation_date",
-        verbose_name="Reservation Start Date",
+        verbose_name="Database entry creation date",
         blank=False,
-        default=timezone.now()
+        default=timezone.now
     )
 
-    termination_date = models.DateTimeField(
-        name="termination_date",
+    reservation_start_date = models.DateTimeField(
+        name="reservation_start_date",
+        verbose_name="Reservation Start Date",
+        blank=False,
+    )
+
+    reservation_end_date = models.DateTimeField(
+        name="reservation_end_date",
         verbose_name="Reservation End Date",
         blank=False,
-        default=timezone.now() + timedelta(days=1)
     )
 
     memory_device_path = models.FilePathField(
@@ -75,3 +91,5 @@ class VFpga(models.Model):
 
     class Meta:
         db_table = "v_fpgas"
+
+        # TODO: def clean(self):

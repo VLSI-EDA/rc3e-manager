@@ -1,11 +1,11 @@
-from django.forms import ModelChoiceField, CharField, TextInput, DateField
+from django.forms import ModelChoiceField, CharField, TextInput, DateTimeField
 from django.forms import ModelForm
-from django.forms import ValidationError
 
 from fpga_manager.models import Fpga
 from fpga_manager.models import FpgaModel
 from fpga_manager.models import Node
 from fpga_manager.models import PciAddress
+from fpga_manager.models import RegionType
 
 
 def create_pci_field(chars):
@@ -53,21 +53,10 @@ class AddFpgaForm(ModelForm):
     # The actual setting of values will be handled by views.add_fpga
 
 
-class AddVFpgaForm(ModelForm):
-    creation_time = DateField()
-    termination_time = DateField()
+class SelectReservationParametersForm(ModelForm):
+    reservation_start_date = DateTimeField()
+    reservation_end_date = DateTimeField()
 
-    # TODO: continue
-    # TODO: get the currently logged in user
-    # TODO: make sure all selected regions are consecutive and on the same fpga
-    # TODO: how to get the memory device path?
-
-    def clean(self):
-        cleaned_data = super(AddVFpgaForm, self).clean()
-        from_time = cleaned_data.get("creation_time")
-        end_time = cleaned_data.get("termination_time")
-
-        if from_time and end_time:
-            if end_time < from_time:
-                raise ValidationError("Creation time must be before the termination time")
-        return cleaned_data
+    region_type = ModelChoiceField(
+        queryset=RegionType.objects.all(),
+    )

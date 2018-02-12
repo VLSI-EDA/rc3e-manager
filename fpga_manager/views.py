@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from fpga_manager.forms import AddFpgaForm
+from fpga_manager.forms import SelectReservationParametersForm
 from fpga_manager.models import Fpga, PciAddress, Region, DeviceVariable
+from fpga_manager.urls import SessionKeys
 
 
 def welcome(request):
@@ -77,4 +79,33 @@ def show_fpga(request, pk):
     }
     return render(request, "view_fpga.html", context)
 
-# TODO create detail views for models
+
+def select_reservation_parameters(request):
+    """
+
+    The required information for the next steps is saved in the session.
+
+    :param request:
+    :return: A redirect to the second step of the reservation process on success;
+     Reloads the same page on error.
+    """
+    if request.method == "POST":
+        filled_out_form = SelectReservationParametersForm(request.POST)
+        if filled_out_form.is_valid():
+            cleaned_data = filled_out_form.cleaned_data
+
+            # Set the session keys to the data from the form so they can be retrieved by the next steps
+            request.session[SessionKeys.RESERVATION_START_DATE] = cleaned_data.get("reservation_start_date")
+            request.session[SessionKeys.RESERVATION_END_DATE] = cleaned_data.get("reservation_end_date")
+            request.session[SessionKeys.RESERVATION_REGION_TYPE] = cleaned_data("reservation_region_type")
+
+            return HttpResponseRedirect()  # TODO continue
+    else:
+        filled_out_form = SelectReservationParametersForm()
+        # TODO check if there are already information in the session keys and fill them in ?
+    return render(request, "select_reservation_parameters.html", {"select_parameter_form": filled_out_form})
+
+
+def select_reservation_regions(request):
+    # TODO get the required information from the session keys
+    raise Http404("Not yet implemented")

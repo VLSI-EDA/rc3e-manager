@@ -140,4 +140,16 @@ urlpatterns = [
             template_name='delete_region_type.html',
             success_url=reverse_lazy('list_region_types'),
         ), name='delete_region_type'),
+
+    # --- Reservation related URLs ---
+
+    url(r'^reservation/select_parameters',
+        views.select_reservation_parameters,
+        name='select_reservation_parameters'
+        ),
+
+    url(r'^reservation/select_regions',
+        views.select_reservation_regions,
+        name='select_reservation_regions'
+        ),
 ]

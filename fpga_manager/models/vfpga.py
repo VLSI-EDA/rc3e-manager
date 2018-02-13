@@ -55,12 +55,14 @@ class VFpga(models.Model):
     reservation_start_date = models.DateTimeField(
         name="reservation_start_date",
         verbose_name="Reservation Start Date",
+        null=False,
         blank=False,
     )
 
     reservation_end_date = models.DateTimeField(
         name="reservation_end_date",
         verbose_name="Reservation End Date",
+        null=False,
         blank=False,
     )
 
@@ -71,18 +73,19 @@ class VFpga(models.Model):
         blank=False,
     )
 
-    in_fpga = models.ForeignKey(
-        'Fpga',
-        name="in_fpga",
-        verbose_name="Residing in FPGA",
-        null=False,
-        blank=False,
-    )
-
     class Meta:
         db_table = "v_fpgas"
 
     def clean(self):
+
+        if self.creation_date is None:
+            raise ValidationError("Creation Date was None")
+
+        if self.reservation_start_date is None:
+            raise ValidationError("Reservation Start Date was None")
+
+        if self.reservation_end_date is None:
+            raise ValidationError("Reservation End Date was None")
 
         # Assure the correct order of dates
         if self.creation_date > self.reservation_start_date:

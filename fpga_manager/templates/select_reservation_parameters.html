@@ -17,6 +17,21 @@
     <form id="select_parameter_form" action="" method="post">
         {% csrf_token %}
 
+        {% if select_parameter_form.errors %}
+            <div class="danger_text">
+                <ul>
+                    {% for field in select_parameter_form %}
+                        {% for error in field.errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in select_parameter_form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <table>
             <tr>
                 <th>Reservation Start Date</th>
@@ -32,7 +47,7 @@
             </tr>
         </table>
 
-        <button type="submit" value="Continue">Continue to next step</button>
+        <button type="submit" value="Save">Continue to next step</button>
 
     </form>
 

@@ -1,11 +1,9 @@
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render
-from django.urls import reverse
+from django.http import Http404
+from django.shortcuts import render, redirect
 
 from fpga_manager.forms import AddFpgaForm
 from fpga_manager.forms import SelectReservationParametersForm
 from fpga_manager.models import Fpga, PciAddress, Region, DeviceVariable
-from fpga_manager.urls import SessionKeys
 
 
 def welcome(request):
@@ -55,7 +53,7 @@ def add_fpga(request):
                 region = Region(region_type=fpga_model_key.region_type, in_fpga=new_fpga, index=i)
                 region.save()
 
-            return HttpResponseRedirect(reverse("list_fpgas"))
+            return redirect("list_fpgas")
 
     else:
         filled_out_form = AddFpgaForm()
@@ -91,21 +89,28 @@ def select_reservation_parameters(request):
     """
     if request.method == "POST":
         filled_out_form = SelectReservationParametersForm(request.POST)
+
         if filled_out_form.is_valid():
             cleaned_data = filled_out_form.cleaned_data
 
-            # Set the session keys to the data from the form so they can be retrieved by the next steps
-            request.session[SessionKeys.RESERVATION_START_DATE] = cleaned_data.get("reservation_start_date")
-            request.session[SessionKeys.RESERVATION_END_DATE] = cleaned_data.get("reservation_end_date")
-            request.session[SessionKeys.RESERVATION_REGION_TYPE] = cleaned_data("reservation_region_type")
+            start_date = cleaned_data.get("reservation_start_date")
+            end_date = cleaned_data.get("reservation_end_date")
+            region_type = cleaned_data.get("region_type")
 
-            return HttpResponseRedirect()  # TODO continue
-    else:
+            # TODO properly pass the formatted datetime and re-parse it in the next step
+            return redirect(
+                "select_reservation_regions",
+                start_date=cleaned_data.get("reservation_start_date"),
+                end_date=cleaned_data.get("reservation_end_date"),
+                region_type_pk=region_type.id,
+            )
+
+    else:  # No POST request
         filled_out_form = SelectReservationParametersForm()
-        # TODO check if there are already information in the session keys and fill them in ?
+
     return render(request, "select_reservation_parameters.html", {"select_parameter_form": filled_out_form})
 
 
-def select_reservation_regions(request):
-    # TODO get the required information from the session keys
-    raise Http404("Not yet implemented")
+def select_reservation_regions(request, start_date, end_date, region_type_pk):
+    # TODO render possible selections
+    return render(request, "select_reservation_regions.html")

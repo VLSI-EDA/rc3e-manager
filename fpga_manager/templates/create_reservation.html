@@ -14,18 +14,18 @@
         <b>Step 1:</b> Please select the desired reservation time and region type.
     </div>
 
-    <form id="select_parameter_form" action="" method="post">
+    <form id="form" action="" method="post">
         {% csrf_token %}
 
-        {% if select_parameter_form.errors %}
+        {% if form.errors %}
             <div class="danger_text">
                 <ul>
-                    {% for field in select_parameter_form %}
+                    {% for field in form %}
                         {% for error in field.errors %}
                             <li>{{ error|escape }}</li>
                         {% endfor %}
                     {% endfor %}
-                    {% for error in select_parameter_form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
                         <li>{{ error|escape }}</li>
                     {% endfor %}
                 </ul>
@@ -35,15 +35,19 @@
         <table>
             <tr>
                 <th>Reservation Start Date</th>
-                <td>{{ select_parameter_form.reservation_start_date }}</td>
+                <td>{{ form.reservation_start_date }}</td>
             </tr>
             <tr>
                 <th>Reservation End Date</th>
-                <td>{{ select_parameter_form.reservation_end_date }}</td>
+                <td>{{ form.reservation_end_date }}</td>
             </tr>
             <tr>
                 <th>Region Type</th>
-                <td>{{ select_parameter_form.region_type }}</td>
+                <td>{{ form.region_type }}</td>
+            </tr>
+            <tr>
+                <th>Consecutive Region Count</th>
+                <td>{{ form.region_count }}</td>
             </tr>
         </table>
 

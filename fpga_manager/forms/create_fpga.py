@@ -1,13 +1,12 @@
-from django.forms import ModelChoiceField, CharField, TextInput, DateTimeField
+from django.forms import CharField
+from django.forms import ModelChoiceField
 from django.forms import ModelForm
-from django.utils import timezone
+from django.forms import TextInput
 
 from fpga_manager.models import Fpga
 from fpga_manager.models import FpgaModel
 from fpga_manager.models import Node
 from fpga_manager.models import PciAddress
-from fpga_manager.models import RegionType
-from fpga_manager.models import VFpga
 
 
 def create_pci_field(chars):
@@ -23,9 +22,9 @@ def create_pci_field(chars):
     )
 
 
-class AddFpgaForm(ModelForm):
+class CreateFpgaForm(ModelForm):
     """
-    The AddFpgaForm class
+    The CreateFpgaForm class
     is a custom form class for adding FPGAs.
     It allows for the input of the PCI addresses split into its component parts.
     """
@@ -53,23 +52,3 @@ class AddFpgaForm(ModelForm):
     node_pci_function = create_pci_field(PciAddress.FUNCTION_CHARS)
 
     # The actual setting of values will be handled by views.add_fpga
-
-
-class SelectReservationParametersForm(ModelForm):
-    class Meta:
-        model = VFpga
-        fields = ['reservation_start_date', 'reservation_end_date']
-
-    reservation_start_date = DateTimeField(
-        required=True,
-        initial=timezone.now
-    )
-
-    reservation_end_date = DateTimeField(
-        required=True,
-    )
-
-    region_type = ModelChoiceField(
-        queryset=RegionType.objects.all(),
-        required=True
-    )

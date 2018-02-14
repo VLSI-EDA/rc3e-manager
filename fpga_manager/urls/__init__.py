@@ -28,7 +28,7 @@ urlpatterns = [
             model=Node,
             context_object_name='form',
             fields='__all__',
-            template_name='add_node.html',
+            template_name='create_node.html',
             success_url=reverse_lazy('list_nodes'),
         ), name='add_node'),
 
@@ -53,7 +53,7 @@ urlpatterns = [
             model=Producer,
             context_object_name='form',
             fields='__all__',
-            template_name='add_producer.html',
+            template_name='create_producer.html',
             success_url=reverse_lazy('list_producers'),
         ), name='add_producer'),
 
@@ -78,7 +78,7 @@ urlpatterns = [
             model=FpgaModel,
             context_object_name='form',
             fields='__all__',
-            template_name='add_fpga_model.html',
+            template_name='create_fpga_model.html',
             success_url=reverse_lazy('list_fpga_models'),
         ), name='add_fpga_model'),
 
@@ -100,7 +100,7 @@ urlpatterns = [
         ), name='list_fpgas'),
 
     url(r'^fpgas/create/',
-        views.add_fpga,
+        views.create_fpga,
         name='add_fpga'),
 
     url(r'^fpgas/delete/(?P<pk>[\d]+)/$',
@@ -122,7 +122,7 @@ urlpatterns = [
             model=RegionType,
             context_object_name='form',
             fields='__all__',
-            template_name='add_region_type.html',
+            template_name='create_region_type.html',
             success_url=reverse_lazy('list_region_types'),
         ), name='add_region_type'),
 
@@ -143,13 +143,8 @@ urlpatterns = [
 
     # --- Reservation related URLs ---
 
-    url(r'^reservation/select_parameters',
-        views.select_reservation_parameters,
-        name='select_reservation_parameters'
-        ),
-
-    url(r'^reservation/select_regions/(?P<start_date>)/(?P<end_date>)/(?P<region_type_pk>)/',
-        views.select_reservation_regions,
-        name='select_reservation_regions'
+    url(r'^reservation/create',
+        views.create_reservation,
+        name='create_reservation'
         ),
 ]

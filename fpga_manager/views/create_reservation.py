@@ -26,9 +26,10 @@ def create_reservation(request):
                 messages.error(request, "No time slot was found for your reservation")
                 return render(request, "create_reservation.html", {"form": filled_out_form})
             else:
-                messages.info(request, "Timeslot found")
+                messages.info(request, "Time slot found")
 
-            # TODO continue: select a suitable set of regions and create the actual DB entries
+                # TODO continue: create the actual DB entries
+                # TODO provide the user with the memory device path he should use?
 
     else:  # No POST request
         filled_out_form = CreateReservationForm()

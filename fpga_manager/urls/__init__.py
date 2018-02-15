@@ -111,9 +111,9 @@ urlpatterns = [
             success_url=reverse_lazy('list_fpgas'),
         ), name='delete_fpga'),
 
-    url(r'^fpgas/view/(?P<pk>[\d]+)/$',
+    url(r'^fpgas/show/(?P<pk>[\d]+)/$',
         views.show_fpga,
-        name='view_fpga'),
+        name='show_fpga'),
 
     # --- Region Type related URLs ---
 

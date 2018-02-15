@@ -56,13 +56,15 @@ def create_fpga(request):
             )
 
             new_fpga.save()
+            memory_device_paths = initialize_fpga(new_fpga)
 
             # Create the regions within the FPGA
             for i in range(0, fpga_model_key.region_count):
                 region = Region(
                     region_type=fpga_model_key.region_type,
                     in_fpga=new_fpga,
-                    index=i
+                    index=i,
+                    memory_device_path=memory_device_paths[i]
                 )
 
                 region.save()
@@ -73,3 +75,14 @@ def create_fpga(request):
         filled_out_form = CreateFpgaForm()
 
     return render(request, "create_fpga.html", {"form": filled_out_form})
+
+
+def initialize_fpga(fpga):
+    memory_device_paths = {}
+    # TODO call the actual initialization script
+    # this is a dummy
+    # Don't forget to validate the paths the script provides
+    for i in range(0, fpga.fpga_model.region_count):
+        memory_device_paths[i] = '/dummy/device/path/'
+
+    return memory_device_paths

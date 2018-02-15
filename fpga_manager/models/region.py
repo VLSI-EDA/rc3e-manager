@@ -42,4 +42,10 @@ class Region(models.Model):
         validators=[MinValueValidator(0)]
     )
 
-
+    # This path is created upon initializing the FPGA with the base programming
+    memory_device_path = models.FilePathField(
+        name="memory_device_path",
+        verbose_name="Memory Device Path",
+        null=False,
+        blank=False,
+    )

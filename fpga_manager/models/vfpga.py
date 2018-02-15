@@ -17,10 +17,6 @@ class VFpga(models.Model):
 
     NOTE: A vFPGA may only be programmed while in the ACTIVE state.
 
-
-    Attribute region_count:
-    The amount of consecutive regions, including the start region, reserved for this vFPGA.
-
     Attribute by_user:
     A foreign key to the user who made the reservation and who is accountable for it.
 
@@ -62,13 +58,6 @@ class VFpga(models.Model):
     reservation_end_date = models.DateTimeField(
         name="reservation_end_date",
         verbose_name="Reservation End Date",
-        null=False,
-        blank=False,
-    )
-
-    memory_device_path = models.FilePathField(
-        name="memory_device_path",
-        verbose_name="Memory Device Path",
         null=False,
         blank=False,
     )

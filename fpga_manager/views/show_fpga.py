@@ -20,4 +20,4 @@ def show_fpga(request, pk):
         "regions": regions,
         "device_variables": device_variables,
     }
-    return render(request, "view_fpga.html", context)
+    return render(request, "show_fpga.html", context)

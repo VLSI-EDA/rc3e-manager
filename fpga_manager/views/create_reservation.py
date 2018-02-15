@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -5,7 +6,6 @@ from fpga_manager.forms import CreateReservationForm
 from fpga_manager.models import Fpga
 from fpga_manager.models import Region
 from fpga_manager.models import RegionReservation
-from fpga_manager.models import RegionType
 
 
 def create_reservation(request):
@@ -20,7 +20,13 @@ def create_reservation(request):
             region_type = cleaned_data.get("region_type")
             region_count = cleaned_data.get("region_count")
 
+            regions_to_reserve = find_regions_for_parameters(start_date, end_date, region_type, region_count)
 
+            if not regions_to_reserve:
+                messages.error(request, "No time slot was found for your reservation")
+                return render(request, "create_reservation.html", {"form": filled_out_form})
+            else:
+                messages.info(request, "Timeslot found")
 
             # TODO continue: select a suitable set of regions and create the actual DB entries
 
@@ -36,13 +42,6 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
     :return: A set of regions on success or an empty set on failure
     """
 
-    # Step 0: Validation
-    if region_type is not RegionType:
-        raise TypeError("region_type was not a RegionType object")
-
-    if region_type not in RegionType.objects:
-        raise ValueError("Unrecognized region type")
-
     # Step 1: get all FPGAs that have the matching region types
     # For details on the following construct see NOTE(0) below
     matching_fpgas = Fpga.objects.filter(
@@ -55,8 +54,7 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
 
     # Step 2: for all regions on these FPGAs:
     for fpga in matching_fpgas:
-        fpga_regions = Region.objects.filter(in_fpga=fpga)
-        fpga_regions.sort(key=lambda r: r.index)  # sort regions by index to gain continuity
+        fpga_regions = Region.objects.filter(in_fpga=fpga).order_by("index")  # sort regions by index to gain continuity
 
         free_regions = []
         consecutive_regions_found = 0
@@ -65,10 +63,9 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
         for region in fpga_regions:
 
             # For details on the following construct see NOTE(1) below
-            conflicting_reservations = RegionReservation.filter(
+            conflicting_reservations = RegionReservation.objects.filter(
                 Q(reserved_by__reservation_start_date__lt=end_date),
                 Q(reserved_by__reservation_end_date__gt=start_date),
-                Q(reserved_by__in_fpga=fpga),
                 region=region
             )
 
@@ -78,7 +75,7 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
                 consecutive_regions_found = 0
 
             else:  # no conflicts found, list the region as free
-                free_regions += region
+                free_regions.append(region)
                 consecutive_regions_found += 1
 
             # Step 2.3: check whether the regions form a long enough consecutive area
@@ -98,6 +95,4 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
 # * include all for which ALL of the following conditions hold:
 #   * The reservation_start_date of the related vFPGA (aka reserved_by) is before the end_date of the new reservation
 #   * The reservation_end_date of the related vFPGA is after the start_date of the new reservation
-#   * The related vFPGA is in the fpga that is currently checked
 #   * the region_reservation is for the region that is currently checked
-#   (The last two conditions should be semantically equivalent, since the current region should be in the current fpga)

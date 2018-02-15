@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <div>
+    <div class="content">
         Please select the desired reservation time, region type and amount of consecutive regions.
     </div>
 
@@ -52,7 +52,16 @@
         </table>
 
         <button type="submit" value="Save">Continue to next step</button>
-
     </form>
+
+
+    <!-- See if the form processing returned any messages !-->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endblock %}

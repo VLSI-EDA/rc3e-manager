@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 
 from fpga_manager import views
-from fpga_manager.models import Fpga, FpgaModel, Node, Producer, RegionType
+from fpga_manager.models import Fpga, FpgaModel, Node, Producer, RegionType, VFpga
 
 urlpatterns = [
 
@@ -143,8 +143,15 @@ urlpatterns = [
 
     # --- Reservation related URLs ---
 
-    url(r'^reservation/create',
+    url(r'^reservations/create',
         views.create_reservation,
         name='create_reservation'
         ),
+
+    url(r'reservations/list',
+        ListView.as_view(
+            model=VFpga,
+            context_object_name='object_list',
+            template_name='list_vfpgas.html',
+        ), name='list_vfpgas'),
 ]

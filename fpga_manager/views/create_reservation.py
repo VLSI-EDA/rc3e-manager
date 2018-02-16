@@ -1,14 +1,18 @@
 from django.contrib import messages
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from fpga_manager.forms import CreateReservationForm
-from fpga_manager.models import Fpga
+from fpga_manager.models import Fpga, VFpga
 from fpga_manager.models import Region
 from fpga_manager.models import RegionReservation
 
 
 def create_reservation(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to make a reservation")
+        return redirect('list_vfpgas')
+
     if request.method == "POST":
         filled_out_form = CreateReservationForm(request.POST)
 
@@ -26,9 +30,24 @@ def create_reservation(request):
                 messages.error(request, "No time slot was found for your reservation")
                 return render(request, "create_reservation.html", {"form": filled_out_form})
             else:
-                messages.info(request, "Time slot found")
 
-                # TODO continue: create the actual DB entries
+                new_vfpga = VFpga(
+                    reservation_start_date=start_date,
+                    reservation_end_date=end_date,
+                    by_user=request.user
+                )
+                new_vfpga.save()
+
+                for region in regions_to_reserve:
+                    new_region_reservation = RegionReservation(
+                        region=region,
+                        reserved_by=new_vfpga
+                    )
+                    new_region_reservation.save()
+
+                messages.info(request, "Reservation successful")
+                return redirect('list_vfpgas')
+
                 # TODO provide the user with the memory device path he should use?
 
     else:  # No POST request

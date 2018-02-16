@@ -35,11 +35,21 @@
         <li><a href={% url 'list_region_types' %}>Region Types</a></li>
         <li><a href={% url 'list_fpga_models' %}>FPGA Models</a></li>
         <li><a href={% url 'list_fpgas' %}>FPGAs</a></li>
-        <li><a href={% url 'create_reservation' %}>Make a Reservation</a></li>
+        <li><a href={% url 'list_vfpgas' %}>Reservations</a></li>
     </ul>
 </nav>
 
 <div class="content">
+
+    <!-- See if the system has returned any messages !-->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     {% block content %} {% endblock %}
 </div>
 </body>

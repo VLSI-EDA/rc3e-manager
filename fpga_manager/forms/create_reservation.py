@@ -18,6 +18,42 @@ class CreateReservationForm(ModelForm):
         initial=timezone.now
     )
 
+    reservation_start_date_year = IntegerField(
+        required=True,
+        initial=timezone.now().year,
+        min_value=timezone.now().year,
+        max_value=9999,
+    )
+
+    reservation_start_date_month = IntegerField(
+        required=True,
+        initial=timezone.now().month,
+        min_value=1,
+        max_value=12,
+    )
+
+    reservation_start_date_day = IntegerField(
+        required=True,
+        initial=timezone.now().day,
+        min_value=1,
+        max_value=31,
+
+    )
+
+    reservation_start_date_hour = IntegerField(
+        required=True,
+        initial=timezone.now().hour,
+        min_value=0,
+        max_value=23,
+    )
+
+    reservation_start_date_minute = IntegerField(
+        required=True,
+        initial=timezone.now().minute,
+        min_value=0,
+        max_value=59,
+    )
+
     reservation_end_date = DateTimeField(
         required=True,
     )

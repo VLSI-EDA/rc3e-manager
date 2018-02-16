@@ -171,3 +171,25 @@ div.content {
 #delete_form {
     display: inline;
 }
+
+/* All the custom input fields for date and time */
+/* TODO this is custom css for one page... externalize*/
+input#id_reservation_start_date_year {
+    width: 4em;
+}
+
+input#id_reservation_start_date_month {
+    width: 3em;
+}
+
+input#id_reservation_start_date_day {
+    width: 3em;
+}
+
+input#id_reservation_start_date_hour {
+    width: 3em;
+}
+
+input#id_reservation_start_date_minute {
+    width: 3em;
+}

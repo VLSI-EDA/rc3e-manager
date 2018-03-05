@@ -105,3 +105,8 @@ class VFpga(models.Model):
             return True
         else:
             return False
+
+    def as_timespan(self):
+        display_format = "%Y/%m/%d, %H:%M"
+        return "{0} - {1}".format(self.reservation_start_date.strftime(display_format),
+                                  self.reservation_end_date.strftime(display_format))

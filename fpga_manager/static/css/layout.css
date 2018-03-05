@@ -107,6 +107,12 @@ div.content {
     height: 100%;
 }
 
+hr {
+    background: var(--alt-bg-color);
+    border-style: none;
+    height: 0.25em;
+}
+
 .td-id {
     text-align: right;
 }

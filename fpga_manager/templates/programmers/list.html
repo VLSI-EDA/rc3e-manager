@@ -1,0 +1,40 @@
+{% extends "../layout_template.html" %}
+
+{% block title %}
+    Available Programmers
+{% endblock %}
+
+{% block header %}
+    <h1>Available Programmers</h1>
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        {{ object_list|length }} entries in total. <a href={% url 'create_programmer' %}> Add a new Programmer</a><br>
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Device Path</th>
+            <th><!-- Delete !--></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for programmer in object_list %}
+            <tr>
+                <!-- Caution! You have to use the names that django assigns for the fields!
+                 See the 'name' field in the model declaration !-->
+                <td class="td-id">{{ programmer.id }}</td>
+                <td>{{ programmer.name }}</td>
+                <td>{{ programmer.device_path }}</td>
+                <td><a class="danger_link" href={% url 'delete_programmers' programmer.id %}>Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 
 from fpga_manager import views
-from fpga_manager.models import Fpga, FpgaModel, Node, Producer, RegionType, VFpga
+from fpga_manager.models import Fpga, FpgaModel, Node, Producer, Programmer, RegionType, VFpga
 
 urlpatterns = [
 
@@ -148,10 +148,36 @@ urlpatterns = [
         name='create_reservation'
         ),
 
-    url(r'reservations/list',
+    url(r'^reservations/list/',
         ListView.as_view(
             model=VFpga,
             context_object_name='object_list',
             template_name='list_vfpgas.html',
         ), name='list_vfpgas'),
+
+    # --- Programmer related URLs ---
+    url(r'^programmers/create/',
+        CreateView.as_view(
+            model=Programmer,
+            context_object_name='form',
+            fields='__all__',
+            template_name='programmers/create.html',
+            success_url=reverse_lazy('list_programmers'),
+        ), name='create_programmer'),
+
+    url(r'^programmers/delete/(?P<pk>[\d]+)/$',
+        DeleteView.as_view(
+            model=Programmer,
+            context_object_name='programmer',
+            template_name='programmers/delete.html',
+            success_url=reverse_lazy('list_programmers'),
+        ), name='delete_programmers'),
+
+    url(r'^programmers/list/',
+        ListView.as_view(
+            model=Programmer,
+            context_object_name='object_list',
+            template_name='programmers/list.html',
+        ), name='list_programmers'),
+
 ]

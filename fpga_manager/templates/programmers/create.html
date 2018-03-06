@@ -1,0 +1,46 @@
+{% extends "../layout_template.html" %}
+
+{% block title %}
+    Create Programmer
+{% endblock %}
+
+{% block header %}
+    <h1>Create Programmer</h1>
+{% endblock %}
+
+{% block content %}
+
+    <form id="form" action="" method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="danger_text">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <th>Device Path</th>
+                <td>{{ form.device_path }}</td>
+            </tr>
+        </table>
+
+        <button type="submit" value="Save">Create new Programmer</button>
+
+    </form>
+
+{% endblock %}

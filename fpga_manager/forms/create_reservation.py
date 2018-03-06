@@ -101,7 +101,7 @@ class AtomicDateTimeField(MultiValueField):
     )
 
     def __init__(self, *args, **kwargs):
-        super(AtomicDateTimeField, self).__init__(*args, **kwargs)
+        super(AtomicDateTimeField, self).__init__(fields=[], *args, **kwargs)
         self.fields = [
             self.field_year,
             self.field_month,

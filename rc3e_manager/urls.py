@@ -19,12 +19,14 @@ from django.contrib import admin
 from fpga_manager import urls as fpga_manager_urls
 from rc3e_manager import views
 
+app_name = 'rc3e_manager'
+
 admin.autodiscover()
 
 urlpatterns = [
     # General views
     url(r'^$', views.welcome, name="welcome"),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls, name="admin"),
     # FPGA manager views
     url(r'^fpga_manager/', include(fpga_manager_urls)),
 ]

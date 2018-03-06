@@ -17,6 +17,7 @@ class RegionReservation(models.Model):
         verbose_name="Reserved by vFPGA",
         null=False,
         blank=False,
+        on_delete=models.CASCADE,
     )
 
     region = models.ForeignKey(
@@ -25,4 +26,5 @@ class RegionReservation(models.Model):
         verbose_name="Reserved Region",
         null=False,
         blank=False,
+        on_delete=models.CASCADE,
     )

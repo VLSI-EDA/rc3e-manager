@@ -24,6 +24,7 @@ class Region(models.Model):
         name="region_type",
         verbose_name="RegionType",
         null=False,
+        on_delete=models.CASCADE,
     )
 
     in_fpga = models.ForeignKey(
@@ -31,7 +32,8 @@ class Region(models.Model):
         name="in_fpga",
         verbose_name="Containing FPGA",
         null=False,
-        blank=False
+        blank=False,
+        on_delete=models.CASCADE,
     )
 
     index = models.IntegerField(

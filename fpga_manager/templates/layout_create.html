@@ -1,0 +1,48 @@
+{# This is the base template for CREATE-type pages #}
+{# Inheriting templates are expected to define the blocks "subject" and "form-body" #}
+{# The subject block must contain the noun of the thing that is to be created, e.g. "Node" or "FPGA" #}
+{# The creating form is always called "form", remember this when defining the appropriate views. #}
+{% extends "layout_general.html" %}
+
+{% load macros %}
+
+{% macro subject %}
+    {% block subject %}{% endblock %}
+{% endmacro %}
+
+
+{% block title %}
+    Create {% use_macro subject %}
+{% endblock %}
+
+{% block content %}
+
+    <form id="form" action="" method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="danger_text">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {# Inheriting templates put the layout of the actual form body in here if they want a special implementation #}
+        {% block form_body %}
+            <table>
+                {{ form.as_table }}
+            </table>
+        {% endblock %}
+
+        <button type="submit" value="Save">Create new {% use_macro subject %}</button>
+    </form>
+
+{% endblock %}

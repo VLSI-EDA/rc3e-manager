@@ -1,32 +1,10 @@
-{% extends "layout_template.html" %}
+{% extends "layout_create.html" %}
 
-{% block title %}
-    Add FPGA
+{% block subject %}
+    FPGA
 {% endblock %}
 
-{% block header %}
-    <h1>Add FPGA</h1>
-{% endblock %}
-
-{% block content %}
-
-    <form id="form" action="" method="post">
-        {% csrf_token %}
-
-        {% if form.errors %}
-            <div class="danger_text">
-                <ul>
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <li>{{ error|escape }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error|escape }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
+{% block form_body %}
 
         <table>
             <tr>
@@ -54,9 +32,5 @@
                 </td>
             </tr>
         </table>
-
-        <button type="submit" value="Save">Add new FPGA</button>
-
-    </form>
 
 {% endblock %}

@@ -1,36 +1,10 @@
-{% extends "layout_template.html" %}
+{% extends "layout_create.html" %}
 
-{% block title %}
-    Select Reservation Parameters
+{% block subject %}
+    Reservation
 {% endblock %}
 
-{% block header %}
-    <h1>Select Reservation Parameters</h1>
-{% endblock %}
-
-{% block content %}
-
-    <div class="content">
-        Please select the desired reservation time, region type and amount of consecutive regions.
-    </div>
-
-    <form id="form" action="" method="post">
-        {% csrf_token %}
-
-        {% if form.errors %}
-            <div class="danger_text">
-                <ul>
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <li>{{ error|escape }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error|escape }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
+{% block form_body %}
 
         <table>
             <tr>
@@ -51,8 +25,5 @@
                 <td>{{ form.region_count }}</td>
             </tr>
         </table>
-
-        <button type="submit" value="Save">Continue to next step</button>
-    </form>
 
 {% endblock %}

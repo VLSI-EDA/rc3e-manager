@@ -1,4 +1,3 @@
-from django.forms import DateTimeField
 from django.forms import IntegerField
 from django.forms import ModelChoiceField
 from django.forms import ModelForm
@@ -125,9 +124,11 @@ class CreateReservationForm(ModelForm):
         model = VFpga
         fields = ['reservation_start_date', 'reservation_end_date']
 
-    reservation_start_date = AtomicDateTimeField()
+    reservation_start_date = AtomicDateTimeField(
+        required=True,
+    )
 
-    reservation_end_date = DateTimeField(
+    reservation_end_date = AtomicDateTimeField(
         required=True,
     )
 

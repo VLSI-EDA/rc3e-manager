@@ -1,10 +1,17 @@
 {% load static %}
+{% load macros %}
 
 <!DOCTYPE html>
+{# Define a macro for the title text so it can be used in multiple spots of the layout #}
+{# Since blocks only may be defined once. #}
+{% macro title %}
+    {% block title %}Undefined title{% endblock %}
+{% endmacro %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% use_macro title %}</title>
     <link rel="stylesheet" href="{% static "css/layout.css" %}"/>
 </head>
 <body>
@@ -22,7 +29,7 @@
     </div>
 
     <div class="header_title">
-        {% block header %}{% endblock %}
+        <h1>{% use_macro title %}</h1>
     </div>
 
 </header>

@@ -11,39 +11,48 @@ from fpga_manager.models import VFpga
 
 
 class AtomicDateTimeWidget(MultiWidget):
+    # This is some magic JavaScript that will be executed on a change of the
+    # Month, Day, Hour and Minute input to add a leading 0 if the value is a single decimal
+    two_digit_formatting_js = "if( this.value.length == 1 ) this.value='0'+this.value;"
+
+    widgets = [
+        NumberInput(
+            attrs={"required": True,
+                   "min": timezone.now().year,
+                   "max": 9999,
+                   "size": 4}
+        ),  # year
+        NumberInput(
+            attrs={"required": True,
+                   "min": 1,
+                   "max": 12,
+                   "size": 2,
+                   "onchange": two_digit_formatting_js}
+        ),  # month
+        NumberInput(
+            attrs={"required": True,
+                   "min": 1,
+                   "max": 31,
+                   "size": 2,
+                   "onchange": two_digit_formatting_js}
+        ),  # day
+        NumberInput(
+            attrs={"required": True,
+                   "min": 0,
+                   "max": 59,
+                   "size": 2,
+                   "onchange": two_digit_formatting_js}
+        ),  # hour
+        NumberInput(
+            attrs={"required": True,
+                   "min": 0,
+                   "max": 59,
+                   "size": 2,
+                   "onchange": two_digit_formatting_js}
+        ),  # minute
+    ]
+
     def __init__(self, *args, **kwargs):
-        self.widgets = [
-            NumberInput(
-                attrs={"required": True,
-                       "min": timezone.now().year,
-                       "max": 9999,
-                       "size": 4}
-            ),  # year
-            NumberInput(
-                attrs={"required": True,
-                       "min": 1,
-                       "max": 12,
-                       "size": 2}
-            ),  # month
-            NumberInput(
-                attrs={"required": True,
-                       "min": 1,
-                       "max": 31,
-                       "size": 2}
-            ),  # day
-            NumberInput(
-                attrs={"required": True,
-                       "min": 0,
-                       "max": 59,
-                       "size": 2}
-            ),  # hour
-            NumberInput(
-                attrs={"required": True,
-                       "min": 0,
-                       "max": 59,
-                       "size": 2}
-            ),  # minute
-        ]
         super(AtomicDateTimeWidget, self).__init__(self.widgets, *args, **kwargs)
 
     def decompress(self, value):
@@ -115,7 +124,8 @@ class AtomicDateTimeField(MultiValueField):
             month=data_list[1],
             day=data_list[2],
             hour=data_list[3],
-            minute=data_list[4]
+            minute=data_list[4],
+            tzinfo=timezone.now().tzinfo
         )
 
 

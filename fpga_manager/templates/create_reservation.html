@@ -1,5 +1,12 @@
 {% extends "layout_create.html" %}
 
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/create_reservation.css" %}"/>
+{% endblock %}
+
+
 {% block subject %}
     Reservation
 {% endblock %}
@@ -8,9 +15,12 @@
 
         <table>
             <tr>
+                <th></th>
+                <td>as YYYY / MM / DD, hh:mm (24 hours format)</td>
+            </tr>
+            <tr>
                 <th>Reservation Start Date</th>
                 <td>{{ form.reservation_start_date }}</td>
-                <td>as YYYY/MM/DD, HH:mm (24 hrs format)</td>
             </tr>
             <tr>
                 <th>Reservation End Date</th>

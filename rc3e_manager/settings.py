@@ -36,9 +36,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'macros',  # see https://github.com/nalourie/django-macros
-    # 'django-filters',  # see http://django-filter.readthedocs.io/en/latest/index.html
+    'macros',  # (0)
 )
+# (0) Used for macros in html templates
+# see https://github.com/nalourie/django-macros
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',

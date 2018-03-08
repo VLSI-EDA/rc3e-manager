@@ -1,16 +1,23 @@
 :root {
-    --bg-color: #D5D3BF;
-    --alt-bg-color: #C8C5AC;
-    --button-color: #B5B292;
+    --std-bg-color: #B9BFC9;
+    --std-font-color: black;
+    --alt-bg-color: #002557;
+    --alt-font-color: #B9BFC9;
+    --btn-bg-color: #B9BFC9;
+    --btn-font-color: #002557;
+    --danger-bg-color: #C8AC9B;
+    --danger-font-color: #8E3600;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--std-bg-color);
+    color: var(--std-font-color);
 }
 
 header {
     background-color: var(--alt-bg-color);
+    color: var(--alt-font-color);
     clear: both;
     padding: 1em;
 }
@@ -19,6 +26,7 @@ nav {
     float: left;
     height: 100%;
     background: var(--alt-bg-color);
+    color: var(--alt-font-color);
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -48,6 +56,7 @@ tr {
 
 tr:hover {
     background-color: var(--alt-bg-color);
+    color: var(--alt-font-color);
 }
 
 td {
@@ -56,32 +65,35 @@ td {
 
 button {
     font-size: inherit;
-    color: black;
-    background-color: var(--button-color);
+    background-color: var(--btn-bg-color);
+    color: var(--btn-font-color);
     border: none;
-    padding: 0.15em 1em;
+    padding: 0.15em 0.5em;
     margin: 5px;
 }
 
 button:hover {
-    border: solid 1px;
+    border: solid 1px var(--std-font-color);;
     margin: 4px;
+    background-color: var(--std-bg-color);
+    color: var(--std-font-color);
 }
 
 a {
     font-size: inherit;
-    text-decoration: none;
-    color: black;
-    background-color: var(--button-color);
+    text-decoration: none; /* Don't underline links*/
+    background-color: var(--btn-bg-color);
+    color: var(--btn-font-color);
     border: none;
     padding: 0.15em 0.5em;
     margin: 5px;
 }
 
 a:hover {
-    border: solid 1px var(--button-color);
+    border: solid 1px var(--std-font-color);;
     margin: 4px;
-    background-color: var(--bg-color);
+    background-color: var(--std-bg-color);
+    color: var(--std-font-color);
 }
 
 div.header_title {
@@ -109,6 +121,7 @@ div.content {
 
 hr {
     background: var(--alt-bg-color);
+    color: var(--alt-font-color);
     border-style: none;
     height: 0.25em;
 }
@@ -127,27 +140,13 @@ hr {
     vertical-align: center;
 }
 
-.danger_button {
-    color: white;
-    background-color: darkred;
+.danger_clickable {
+    color: var(--btn-font-color);
+    background-color: var(--btn-bg-color);
     font-weight: bold;
 }
 
-.danger_button:hover {
-    /* Flashing red border*/
-    animation-name: danger_flash;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-}
-
-.danger_link {
-    color: white;
-    background-color: darkred;
-    font-weight: bold;
-}
-
-.danger_link:hover {
-    /* Flashing red border*/
+.danger_clickable:hover {
     animation-name: danger_flash;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -155,19 +154,23 @@ hr {
 
 @keyframes danger_flash {
     0% {
-        background-color: darkred;
+        color: var(--btn-font-color);
+        background-color: var(--btn-bg-color);
     }
     50% {
-        background-color: red;
+        background-color: var(--danger-bg-color);
+        color: var(--danger-font-color);
     }
     100% {
-        background-color: darkred;
+        color: var(--btn-font-color);
+        background-color: var(--btn-bg-color);
     }
 }
 
 .danger_text {
-    border: solid darkred 0.15em;
+    border: solid var(--danger-font-color) 0.15em;
     padding: 1em;
+    color: var(--danger-font-color);
 }
 
 #abort_form {

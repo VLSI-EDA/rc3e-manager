@@ -29,7 +29,7 @@
                  See the 'name' field in the model declaration!-->
                 <td class="td-id">{{ producer.id }}</td>
                 <td>{{ producer.name }}</td>
-                <td><a class="danger_link" href={% url 'delete_producer' producer.id %}>Delete</a></td>
+                <td><a class="danger_clickable" href={% url 'delete_producer' producer.id %}>Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

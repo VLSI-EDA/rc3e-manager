@@ -31,7 +31,7 @@
                 <td class="td-id">{{ programmer.id }}</td>
                 <td>{{ programmer.name }}</td>
                 <td>{{ programmer.device_path }}</td>
-                <td><a class="danger_link" href={% url 'delete_programmers' programmer.id %}>Delete</a></td>
+                <td><a class="danger_clickable" href={% url 'delete_programmers' programmer.id %}>Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

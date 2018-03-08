@@ -33,7 +33,7 @@
                 <td>{{ node.name }}</td>
                 <td>{{ node.ip }}</td>
                 <td class="td-textfield">{{ node.comment }}</td>
-                <td><a class="danger_link" href={% url 'delete_node' node.id %}>Delete</a></td>
+                <td><a class="danger_clickable" href={% url 'delete_node' node.id %}>Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

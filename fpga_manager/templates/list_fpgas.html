@@ -37,7 +37,7 @@
                 <td class="td-pci_address">{{ fpga.node_pci }}</td>
                 <td class="td-pci_address">{{ fpga.device_pci }}</td>
                 <td><a href={% url 'show_fpga' fpga.id %}>Details</a></td>
-                <td><a class="danger_link" href={% url 'delete_fpga' fpga.id %}>Delete</a></td>
+                <td><a class="danger_clickable" href={% url 'delete_fpga' fpga.id %}>Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

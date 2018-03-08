@@ -33,7 +33,7 @@
                 <td>{{ region_type.lut_count }}</td>
                 <td>{{ region_type.register_count }}</td>
                 <td>{{ region_type.blockram_size }}</td>
-                <td><a class="danger_link" href={% url 'delete_region_type' region_type.id %}>Delete</a></td>
+                <td><a class="danger_clickable" href={% url 'delete_region_type' region_type.id %}>Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

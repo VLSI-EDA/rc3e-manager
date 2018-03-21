@@ -1,0 +1,52 @@
+{% extends "../layout_general.html" %}
+
+{% block title %}
+    Delete Region Type
+{% endblock %}
+
+{% block header %}
+    <h1>Delete Region Type</h1>
+{% endblock %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ region_type.id }}</td>
+        </tr>
+        <tr>
+            <th>LUTs</th>
+            <td>{{ region_type.lut_count }}</td>
+        </tr>
+        <tr>
+            <th>Registers</th>
+            <td>{{ region_type.register_count }}</td>
+        </tr>
+        <tr>
+            <th>BlockRAM</th>
+            <td>{{ region_type.blockram_size }}</td>
+        </tr>
+    </table>
+
+    <div class="danger_text">
+        <strong>Caution!</strong><br>
+        This will also delete
+        <ul>
+            <li>All FPGA models using this region type</li>
+            <li>All FPGAs of the above models</li>
+            <li>All reservations made on above FPGAs</li>
+        </ul>
+        <br>
+        Are you sure?
+    </div>
+
+    <a href="{% url 'list_region_types' %}">Abort</a>
+
+    <form id="delete_form" action="" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Confirm" class="danger_clickable">Delete</button>
+    </form>
+
+
+{% endblock %}

@@ -16,8 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from fpga_manager import urls as fpga_manager_urls
 from rc3e_manager import views
+from rc3e_manager.rest_api import urls as rest_urls
+from rc3e_manager.web_api import urls as web_urls
 
 app_name = 'rc3e_manager'
 
@@ -27,6 +28,6 @@ urlpatterns = [
     # General views
     url(r'^$', views.welcome, name="welcome"),
     url(r'^admin/', admin.site.urls, name="admin"),
-    # FPGA manager views
-    url(r'^fpga_manager/', include(fpga_manager_urls)),
+    url(r'^web_api/', include(web_urls)),
+    url(r'^rest_api/', include(rest_urls))
 ]

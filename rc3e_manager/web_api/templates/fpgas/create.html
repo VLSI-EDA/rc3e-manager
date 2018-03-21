@@ -1,0 +1,36 @@
+{% extends "../layout_create.html" %}
+
+{% block subject %}
+    FPGA
+{% endblock %}
+
+{% block form_body %}
+
+        <table>
+            <tr>
+                <th>Node</th>
+                <td>{{ form.node }}</td>
+            </tr>
+            <tr>
+                <th>FPGA Model</th>
+                <td>{{ form.fpga_model }}</td>
+            </tr>
+            <tr>
+                <th>Device PCI</th>
+                <td>{{ form.device_pci_system }}:
+                    {{ form.device_pci_bus }}:
+                    {{ form.device_pci_device }}.
+                    {{ form.device_pci_function }}
+                </td>
+            </tr>
+            <tr>
+                <th>Node PCI</th>
+                <td>{{ form.node_pci_system }}:
+                    {{ form.node_pci_bus }}:
+                    {{ form.node_pci_device }}.
+                    {{ form.node_pci_function }}
+                </td>
+            </tr>
+        </table>
+
+{% endblock %}

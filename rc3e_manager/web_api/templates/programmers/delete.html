@@ -1,0 +1,46 @@
+{% extends "../layout_general.html" %}
+
+{% block title %}
+    Delete Programmer
+{% endblock %}
+
+{% block header %}
+    <h1>Delete Programmer</h1>
+{% endblock %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ programmer.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ programmer.name }}</td>
+        </tr>
+        <tr>
+            <th>Device Path</th>
+            <td>{{ programmer.device_path }}</td>
+        </tr>
+    </table>
+
+    <div class="danger_text">
+        <strong>Caution!</strong><br>
+        This will also delete
+        <ul>
+            <li>All Scripts associated with this Programmer</li>
+        </ul>
+        <br>
+        Are you sure?
+    </div>
+
+    <a href="{% url 'list_programmers' %}">Abort</a>
+
+    <form id="delete_form" action="" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Confirm" class="danger_clickable">Delete</button>
+    </form>
+
+
+{% endblock %}

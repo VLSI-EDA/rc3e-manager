@@ -1,0 +1,43 @@
+{% extends "../layout_general.html" %}
+
+{% block title %}
+    Available Reservations
+{% endblock %}
+
+{% block header %}
+    <h1>Available Reservations</h1>
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        {{ object_list|length }} entries in total. <a href={% url 'create_reservation' %}> Make a new
+        Reservation</a><br>
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Created</th>
+            <th>Reservation Begin</th>
+            <th>Reservation End</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for vfpga in object_list %}
+            <tr>
+                <!-- Caution! You have to use the names that django assigns for the fields!
+                 See the 'name' field in the model declaration !-->
+                <td class="td-id">{{ vfpga.id }}</td>
+                <td>{{ vfpga.by_user }}</td>
+                <td>{{ vfpga.creation_date }}</td>
+                <td>{{ vfpga.reservation_start_date }}</td>
+                <td>{{ vfpga.reservation_end_date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

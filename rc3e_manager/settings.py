@@ -29,8 +29,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'backend',  # The backend holding the model
-    'fpga_manager',  # our own FPGA management app
+    'rc3e_manager.backend',  # The backend holding the model
+    'rc3e_manager.web_api',  # the web_api frontend
+    'rc3e_manager.rest_api',  # the RESTful API frontend
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,9 +39,23 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'macros',  # (0)
+    'rest_framework',  # (1)
 )
 # (0) Used for macros in html templates
 # see https://github.com/nalourie/django-macros
+
+# (1) Used for the RESTful API.
+# see http://www.django-rest-framework.org/
+# Configuration, see below
+
+# REST framework configuration
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -106,3 +121,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'welcome'
+

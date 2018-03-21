@@ -1,10 +1,10 @@
 from django.http import Http404
 from django.shortcuts import render
 
-from fpga_manager.models import DeviceVariable
-from fpga_manager.models import Fpga
-from fpga_manager.models import Region
-from fpga_manager.models import RegionReservation
+from backend.models import DeviceVariable
+from backend.models import Fpga
+from backend.models import Region
+from backend.models import RegionReservation
 
 
 def show_fpga(request, pk):
@@ -26,8 +26,8 @@ def show_fpga(request, pk):
 
     context = {
         "fpga": fpga,
-        "regions": regions,
+        "region_types": regions,
         "device_variables": device_variables,
         "reservations": reservations,
     }
-    return render(request, "show_fpga.html", context)
+    return render(request, "fpgas/show.html", context)

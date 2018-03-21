@@ -1,10 +1,10 @@
 from django.shortcuts import redirect
 from django.shortcuts import render
 
+from backend.models import Fpga
+from backend.models import PciAddress
+from backend.models import Region
 from fpga_manager.forms import CreateFpgaForm
-from fpga_manager.models import Fpga
-from fpga_manager.models import PciAddress
-from fpga_manager.models import Region
 
 
 def create_fpga(request):
@@ -58,7 +58,7 @@ def create_fpga(request):
             new_fpga.save()
             memory_device_paths = initialize_fpga(new_fpga)
 
-            # Create the regions within the FPGA
+            # Create the region_types within the FPGA
             for i in range(0, fpga_model_key.region_count):
                 region = Region(
                     region_type=fpga_model_key.region_type,
@@ -74,7 +74,7 @@ def create_fpga(request):
     else:  # Not a POST request
         filled_out_form = CreateFpgaForm()
 
-    return render(request, "create_fpga.html", {"form": filled_out_form})
+    return render(request, "fpgas/create.html", {"form": filled_out_form})
 
 
 def initialize_fpga(fpga):

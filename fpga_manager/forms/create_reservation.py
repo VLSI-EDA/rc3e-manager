@@ -6,8 +6,8 @@ from django.forms import MultiWidget
 from django.forms import NumberInput
 from django.utils import timezone
 
-from fpga_manager.models import RegionType
-from fpga_manager.models import VFpga
+from backend.models import RegionType
+from backend.models import VFpga
 
 
 class AtomicDateTimeWidget(MultiWidget):

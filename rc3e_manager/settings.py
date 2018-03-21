@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
+    'backend',  # The backend holding the model
     'fpga_manager',  # our own FPGA management app
     'django.contrib.admin',
     'django.contrib.auth',

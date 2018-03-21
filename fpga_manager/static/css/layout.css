@@ -1,4 +1,6 @@
 :root {
+
+    /* Color palette definition */
     --std-bg-color: #B9BFC9;
     --std-font-color: black;
     --alt-bg-color: #002557;
@@ -7,6 +9,7 @@
     --btn-font-color: #002557;
     --danger-bg-color: #C8AC9B;
     --danger-font-color: #8E3600;
+
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 

@@ -2,10 +2,10 @@ from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect
 
+from backend.models import Fpga, VFpga
+from backend.models import Region
+from backend.models import RegionReservation
 from fpga_manager.forms import CreateReservationForm
-from fpga_manager.models import Fpga, VFpga
-from fpga_manager.models import Region
-from fpga_manager.models import RegionReservation
 
 
 def create_reservation(request):
@@ -28,7 +28,7 @@ def create_reservation(request):
 
             if not regions_to_reserve:
                 messages.error(request, "No time slot was found for your reservation")
-                return render(request, "create_reservation.html", {"form": filled_out_form})
+                return render(request, "reservations/create.html", {"form": filled_out_form})
             else:
 
                 new_vfpga = VFpga(
@@ -53,13 +53,13 @@ def create_reservation(request):
     else:  # No POST request
         filled_out_form = CreateReservationForm()
 
-    return render(request, "create_reservation.html", {"form": filled_out_form})
+    return render(request, "reservations/create.html", {"form": filled_out_form})
 
 
 def find_regions_for_parameters(start_date, end_date, region_type, region_count):
     """
-    This is a helper function to determine a set of regions that match the reservation request.
-    :return: A set of regions on success or an empty set on failure
+    This is a helper function to determine a set of region_types that match the reservation request.
+    :return: A set of region_types on success or an empty set on failure
     """
 
     # Step 1: get all FPGAs that have the matching region types
@@ -70,11 +70,12 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
     )
 
     # TODO if no matching FPGA was found, abort and inform the user
-    # (likely he requested to many regions or no fpga which supported the region type was available)
+    # (likely he requested to many region_types or no fpga which supported the region type was available)
 
-    # Step 2: for all regions on these FPGAs:
+    # Step 2: for all region_types on these FPGAs:
     for fpga in matching_fpgas:
-        fpga_regions = Region.objects.filter(in_fpga=fpga).order_by("index")  # sort regions by index to gain continuity
+        fpga_regions = Region.objects.filter(in_fpga=fpga).order_by(
+            "index")  # sort region_types by index to gain continuity
 
         free_regions = []
         consecutive_regions_found = 0
@@ -89,7 +90,7 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
                 region=region
             )
 
-            # Step 2.2: add all regions where no reservation collides with the requested dates
+            # Step 2.2: add all region_types where no reservation collides with the requested dates
             if conflicting_reservations:  # have conflicts, reset counter and result set
                 free_regions.clear()
                 consecutive_regions_found = 0
@@ -98,8 +99,8 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
                 free_regions.append(region)
                 consecutive_regions_found += 1
 
-            # Step 2.3: check whether the regions form a long enough consecutive area
-            if consecutive_regions_found >= region_count:  # found enough continuous regions
+            # Step 2.3: check whether the region_types form a long enough consecutive area
+            if consecutive_regions_found >= region_count:  # found enough continuous region_types
                 return free_regions  # found enough
 
     return []  # reached the end of the search loop, there seems to be nothing here
@@ -108,7 +109,7 @@ def find_regions_for_parameters(start_date, end_date, region_type, region_count)
 # * look up all FPGAs
 # * include all for which ALL of the following conditions hold:
 #   * The associated model has the requested region type
-#   * The associated model has at least the required amount of regions
+#   * The associated model has at least the required amount of region_types
 
 # NOTE(1): This is a filter which does the following:
 # * look up all region_reservations

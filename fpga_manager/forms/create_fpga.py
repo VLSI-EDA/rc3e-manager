@@ -3,10 +3,10 @@ from django.forms import ModelChoiceField
 from django.forms import ModelForm
 from django.forms import TextInput
 
-from fpga_manager.models import Fpga
-from fpga_manager.models import FpgaModel
-from fpga_manager.models import Node
-from fpga_manager.models import PciAddress
+from backend.models import Fpga
+from backend.models import FpgaModel
+from backend.models import Node
+from backend.models import PciAddress
 
 
 def create_pci_field(chars):

@@ -17,7 +17,7 @@ class Region(models.Model):
     """
 
     class Meta:
-        db_table = "region_types"
+        db_table = "regions"
 
     region_type = models.ForeignKey(
         'RegionType',

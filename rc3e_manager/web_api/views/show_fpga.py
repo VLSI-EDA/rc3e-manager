@@ -30,4 +30,4 @@ def show_fpga(request, pk):
         "device_variables": device_variables,
         "reservations": reservations,
     }
-    return render(request, "fpgas/../templates/fpgas/show.html", context)
+    return render(request, "fpgas/show.html", context)

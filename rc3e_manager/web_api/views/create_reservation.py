@@ -28,7 +28,7 @@ def create_reservation(request):
 
             if not regions_to_reserve:
                 messages.error(request, "No time slot was found for your reservation")
-                return render(request, "reservations/../templates/reservations/create.html", {"form": filled_out_form})
+                return render(request, "reservations/create.html", {"form": filled_out_form})
             else:
 
                 new_vfpga = VFpga(
@@ -53,7 +53,7 @@ def create_reservation(request):
     else:  # No POST request
         filled_out_form = CreateReservationForm()
 
-    return render(request, "reservations/../templates/reservations/create.html", {"form": filled_out_form})
+    return render(request, "reservations/create.html", {"form": filled_out_form})
 
 
 def find_regions_for_parameters(start_date, end_date, region_type, region_count):

@@ -74,7 +74,7 @@ def create_fpga(request):
     else:  # Not a POST request
         filled_out_form = CreateFpgaForm()
 
-    return render(request, "fpgas/../templates/fpgas/create.html", {"form": filled_out_form})
+    return render(request, "fpgas/create.html", {"form": filled_out_form})
 
 
 def initialize_fpga(fpga):

@@ -1,0 +1,38 @@
+{% extends "../layout_delete.html" %}
+
+{% block subject %}
+    Node
+{% endblock %}
+
+{% block object_representation %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ object.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ object.name }}</td>
+        </tr>
+        <tr>
+            <th>IP</th>
+            <td>{{ object.ip }}</td>
+        </tr>
+        <tr>
+            <th>Comment</th>
+            <td class="td-textfield">{{ object.comment }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
+
+{% block warnings %}
+        This will also delete
+        <ul>
+            <li>All FPGAs related to the node</li>
+            <li>All reservations made on above FPGAs</li>
+        </ul>
+        <br>
+{% endblock %}
+

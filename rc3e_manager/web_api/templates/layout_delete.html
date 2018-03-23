@@ -1,0 +1,53 @@
+{# This is the base template for DELETE-type pages #}
+{# Inheriting templates are expected to define the blocks #}
+{#  "subject", "abort_url" #}
+{#  "object_representation" and (optionally) "warnings"  #}
+{# The subject block must contain the noun of the thing that is to be deleted, e.g. "Node" or "FPGA" #}
+{# The object to be deleted is always called "object", remember this when defining the appropriate views. #}
+{% extends "layout_general.html" %}
+
+{% load macros %}
+
+{% macro subject %}
+    {% block subject %}{% endblock %}
+{% endmacro %}
+
+
+{% block title %}
+    Delete {% use_macro subject %}
+{% endblock %}
+
+{% block content %}
+
+    {# Inheriting templates put the layout of the actual object in here if they want a special implementation #}
+    {% block object_representation %}
+        {{ object.id }}
+    {% endblock %}
+
+    <div class="danger_text">
+        {% block warnings %}{% endblock %}
+        Are you sure?
+    </div>
+
+    <form id="delete_form" action="" method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="danger_text">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <button type="submit" value="Confirm" class="danger_clickable">Delete</button>
+    </form>
+
+{% endblock %}

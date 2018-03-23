@@ -5,11 +5,12 @@ from django.views.generic import ListView, CreateView, DeleteView
 
 from rc3e_manager.backend.models import Fpga, FpgaModel, Node, Producer, Programmer, RegionType, VFpga
 from rc3e_manager.web_api import views
+from rc3e_manager.web_api.urls.generators import generate_delete_view
 from rc3e_manager.web_api.urls.generators import generate_list_view
 
 urlpatterns = [
 
-    generate_list_view(Node, True),
+
 
     # TODO All the update views
 
@@ -19,12 +20,8 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
 
     # --- Node-related URLs ---
-    url(r'^nodes/list/',
-        ListView.as_view(
-            model=Node,
-            context_object_name='object_list',
-            template_name="nodes/list.html"
-        ), name='list_nodes'),
+    generate_list_view(Node, True),
+    generate_delete_view(Node, True),
 
     url(r'^nodes/create/',
         CreateView.as_view(
@@ -34,14 +31,6 @@ urlpatterns = [
             template_name='nodes/create.html',
             success_url=reverse_lazy('list_nodes'),
         ), name='add_node'),
-
-    url(r'^nodes/delete/(?P<pk>[\d]+)/$',
-        DeleteView.as_view(
-            model=Node,
-            context_object_name='node',
-            template_name='nodes/delete_node.html',
-            success_url=reverse_lazy('list_nodes'),
-        ), name='delete_node'),
 
     # --- Producer-related URLs ---
     url(r'^producers/list/',
@@ -109,7 +98,7 @@ urlpatterns = [
     url(r'^fpgas/delete/(?P<pk>[\d]+)/$',
         DeleteView.as_view(
             model=Fpga,
-            context_object_name='fpga',
+            context_object_name='object',
             template_name='fpgas/delete.html',
             success_url=reverse_lazy('list_fpgas'),
         ), name='delete_fpga'),

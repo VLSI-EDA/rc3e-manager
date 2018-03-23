@@ -1,57 +1,43 @@
-{% extends "../layout_general.html" %}
+{% extends "../layout_delete.html" %}
 
-{% block title %}
-    Delete FPGA model
+{% block subject %}
+    FPGA
 {% endblock %}
 
-{% block header %}
-    <h1>Delete FPGA</h1>
-{% endblock %}
-
-{% block content %}
+{% block object_representation %}
 
     <table>
         <tr>
             <th>ID</th>
-            <td>{{ fpga.id }}</td>
+            <td>{{ object.id }}</td>
         </tr>
         <tr>
             <th>Node</th>
-            <td>{{ fpga.node }}</td>
+            <td>{{ object.node }}</td>
         </tr>
         <tr>
             <th>Model</th>
-            <td>{{ fpga.fpga_model }}</td>
+            <td>{{ object.fpga_model }}</td>
         </tr>
         <tr>
             <th>Node PCI</th>
-            <td>{{ fpga.node_pci }}</td>
+            <td>{{ object.node_pci }}</td>
         </tr>
         <tr>
             <th>Device PCI</th>
-            <td>{{ fpga.device_pci }}</td>
+            <td>{{ object.device_pci }}</td>
         </tr>
     </table>
 
-    <div class="danger_text">
-        <strong>Caution!</strong><br>
+{% endblock %}
+
+{% block warnings %}
         This will also delete
         <ul>
-            <li>All vFPGAs associated with this FPGA</li>
-            <li>All reservations made on above vFPGAs</li>
-            <li>All device variables associated with this FPGA</li>
             <li>All regions associated with this FPGA</li>
+            <li>All reservations made on above regions</li>
+            <li>All device variables associated with this FPGA</li>
         </ul>
-        <br>
-        Are you sure?
-    </div>
-
-    <a href="{% url 'list_fpgas' %}">Abort</a>
-
-    <form id="delete_form" action="" method="post">
-        {% csrf_token %}
-        <button type="submit" value="Confirm" class="danger_clickable">Delete</button>
-    </form>
-
-
 {% endblock %}
+
+

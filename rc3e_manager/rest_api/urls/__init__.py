@@ -1,3 +1,4 @@
+from django.conf.urls import include
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -12,6 +13,8 @@ urlpatterns = [
 
     url(r'^region_types/$', RegionTypeList.as_view()),
     url(r'^region_types/(?P<pk>[0-9]+)/$', RegionTypeDetail.as_view()),
+
+    url(r'^api-auth/', include('rest_framework.urls')),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

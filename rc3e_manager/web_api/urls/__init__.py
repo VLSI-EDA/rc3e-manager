@@ -16,6 +16,7 @@ urlpatterns = [
 
     # --- General purpose URLs ---
     url(r'^$', views.welcome, name="welcome"),
+    url(r'^blank/$', views.blank, name="blank"),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
 

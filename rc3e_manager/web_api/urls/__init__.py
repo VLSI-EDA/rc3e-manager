@@ -75,13 +75,7 @@ urlpatterns = [
             success_url=reverse_lazy('list_fpga_models'),
         ), name='add_fpga_model'),
 
-    url(r'^fpga_models/delete/(?P<pk>[\d]+)/$',
-        DeleteView.as_view(
-            model=FpgaModel,
-            context_object_name='fpga_model',
-            template_name='fpga_models/delete_fpga_model.html',
-            success_url=reverse_lazy('list_fpga_models'),
-        ), name='delete_fpga_model'),
+    generate_delete_view(FpgaModel, True),
 
     # --- FPGA related URLs ---
 

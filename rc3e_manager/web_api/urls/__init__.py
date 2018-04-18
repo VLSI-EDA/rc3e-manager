@@ -59,12 +59,7 @@ urlpatterns = [
         ), name='delete_producer'),
 
     # --- FPGA Model-related URLs ---
-    url(r'^fpga_models/list/',
-        ListView.as_view(
-            model=FpgaModel,
-            context_object_name='object_list',
-            template_name="fpga_models/list_fpga_models.html"
-        ), name='list_fpga_models'),
+    generate_list_view(FpgaModel, True),
 
     url(r'^fpga_models/create/',
         CreateView.as_view(

@@ -1,0 +1,52 @@
+{# This is the base template for LIST-type pages #}
+{# Inheriting templates are expected to define the blocks #}
+{#  "subject", "create_url", "delete_url", "representation_header", "object_representation" #}
+{# The subject block must contain the noun of the thing that is to be deleted, e.g. "Node" or "FPGA" in singular #}
+{# The object list to be displayed is always called "object_list", remember this when defining the appropriate views. #}
+{# The list of objects is represented in a table #}
+{# The representation_header should contain the <th> entries according to the object representation #}
+{# Each of the entries of "object_list" is called "object". #}
+{# The object_representation defines the <td> entries according to the representation header #}
+
+{% extends "layout_general.html" %}
+
+{% load macros %}
+
+{% macro subject %}
+    {% block subject %}{% endblock %}
+{% endmacro %}
+
+
+{% block title %}
+    List of {% use_macro subject %}s
+    {# Adding an "s" for plural form since the subject is supposed to be in singular #}
+{% endblock %}
+
+{% block content %}
+    <p>
+        {{ object_list|length }} entries in total.
+        <a href={% block add_url %}{% endblock %}> Add a new {% use_macro subject %}</a><br>
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            {% block representation_header %}
+                <th>ID</th>
+            {% endblock %}
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                {% block object_representation %}
+                    <td class="td-id">{{ object.id }}</td>
+                {% endblock %}
+                <td><a class="danger_clickable" href={% block delete_url %} {% endblock %}>Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

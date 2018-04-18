@@ -1,0 +1,27 @@
+{% extends "../layout_list.html" %}
+
+{% block subject %}
+    FPGA Model
+{% endblock %}
+
+{% block add_url %}
+    {% url "add_fpga_model" %}
+{% endblock %}
+
+{% block delete_url %}
+    {% url "delete_fpga_model" object.id %}
+{% endblock %}
+
+{# The header for the representation table #}
+{% block representation_header %}
+    <th>ID</th>
+    <th>Producer</th>
+    <th>Designation</th>
+{% endblock %}
+
+{# The per-object entries of the representation table #}
+{% block object_representation %}
+    <td class="td-id">{{ object.id }}</td>
+    <td>{{ object.producer.name }}</td>
+    <td>{{ object.designation }}</td>
+{% endblock %}

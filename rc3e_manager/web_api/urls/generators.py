@@ -33,7 +33,6 @@ def deduce_generator_parameters(
         [
             "url_pattern_name",
             "url_pattern",
-            "context_object_name",
             "form_name",
             "template_name",
             "success_url"
@@ -42,7 +41,6 @@ def deduce_generator_parameters(
     class_name = model_class_pythonic_name(model_entity)
 
     # Set static values
-    context_object_name = "object"
     form_name = "form"
 
     # Generate the url pattern name
@@ -83,7 +81,6 @@ def deduce_generator_parameters(
     return GeneratorParameters(
         url_pattern_name,
         url_pattern,
-        context_object_name,
         form_name,
         template_name,
         success_url
@@ -114,7 +111,7 @@ def generate_list_view(model_entity, verbose=False):
         generator_parameters.url_pattern,
         ListView.as_view(
             model=model_entity,
-            context_object_name=generator_parameters.context_object_name,
+            context_object_name="object_list",
             template_name=generator_parameters.template_name
         ),
         name=generator_parameters.url_pattern_name
@@ -147,7 +144,7 @@ def generate_delete_view(model_entity, verbose=False):
         generator_parameters.url_pattern,
         DeleteView.as_view(
             model=model_entity,
-            context_object_name=generator_parameters.context_object_name,
+            context_object_name="object",
             template_name=generator_parameters.template_name,
             success_url=reverse_lazy(generator_parameters.success_url),
         ),

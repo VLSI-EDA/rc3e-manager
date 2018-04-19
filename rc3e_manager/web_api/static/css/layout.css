@@ -3,7 +3,7 @@
     /* Color palette definition */
     --std-bg-color: #B9BFC9;
     --std-font-color: black;
-    --alt-bg-color: #002557;
+    --alt-bg-color: #002557; /*TUD-blue*/
     --alt-font-color: #B9BFC9;
     --btn-bg-color: #B9BFC9;
     --btn-font-color: #002557;
@@ -32,6 +32,7 @@ nav {
     color: var(--alt-font-color);
     padding-left: 1em;
     padding-right: 1em;
+    padding-top: 1em;
 }
 
 nav ul {
@@ -101,6 +102,14 @@ a:hover {
 
 div.header_title {
     text-align: center;
+    vertical-align: center;
+    display: inline;
+    overflow: auto;
+    height: 4em;
+    line-height: 4em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin: auto;
 }
 
 div.user_detail {
@@ -127,6 +136,15 @@ hr {
     color: var(--alt-font-color);
     border-style: none;
     height: 0.25em;
+}
+
+img.logo {
+    vertical-align: middle;
+    height: 5em;
+    float: left;
+    overflow: auto;
+    margin: auto;
+    padding: 0.5em;
 }
 
 .td-id {

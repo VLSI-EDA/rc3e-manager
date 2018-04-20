@@ -1,27 +1,29 @@
 {% extends "../layout_list.html" %}
 
 {% block subject %}
-    FPGA Model
+    Region Type
 {% endblock %}
 
 {% block add_url %}
-    {% url "create_fpga_model" %}
+    {% url "create_region_type" %}
 {% endblock %}
 
 {% block delete_url %}
-    {% url "delete_fpga_model" object.id %}
+    {% url "delete_region_type" object.id %}
 {% endblock %}
 
 {# The header for the representation table #}
 {% block representation_header %}
     <th>ID</th>
-    <th>Producer</th>
-    <th>Designation</th>
+    <th>LUTs</th>
+    <th>Registers</th>
+    <th>BlockRAM</th>
 {% endblock %}
 
 {# The per-object entries of the representation table #}
 {% block object_representation %}
     <td class="td-id">{{ object.id }}</td>
-    <td>{{ object.producer.name }}</td>
-    <td>{{ object.designation }}</td>
+    <td>{{ object.lut_count }}</td>
+    <td>{{ object.register_count }}</td>
+    <td>{{ object.blockram_size }}</td>
 {% endblock %}

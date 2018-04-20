@@ -1,42 +1,27 @@
-{% extends "../layout_general.html" %}
+{% extends "../layout_list.html" %}
 
-{% block title %}
-    Available Nodes
+{% block subject %}
+    Node
 {% endblock %}
 
-{% block header %}
-    <h1>Available Nodes</h1>
+{% block add_url %}
+    {% url "create_node" %}
 {% endblock %}
 
-{% block content %}
+{% block delete_url %}
+    {% url "delete_node" object.id %}
+{% endblock %}
 
-    <p>
-        {{ object_list|length }} entries in total. <a href={% url 'add_node' %}> Add a new node</a><br>
-    </p>
+{# The header for the representation table #}
+{% block representation_header %}
+    <th>ID</th>
+    <th>IP-Address</th>
+    <th>Comment</th>
+{% endblock %}
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>IP</th>
-            <th>Comment</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for node in object_list %}
-            <tr>
-                <!-- Caution! You have to use the names that django assigns for the fields!
-                 See the 'name' field in the model declaration!-->
-                <td class="td-id">{{ node.id }}</td>
-                <td>{{ node.name }}</td>
-                <td>{{ node.ip }}</td>
-                <td class="td-textfield">{{ node.comment }}</td>
-                <td><a class="danger_clickable" href={% url 'delete_node' node.id %}>Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+{# The per-object entries of the representation table #}
+{% block object_representation %}
+    <td class="td-id">{{ object.id }}</td>
+    <td>{{ object.ip }}</td>
+    <td>{{ object.comment }}</td>
 {% endblock %}

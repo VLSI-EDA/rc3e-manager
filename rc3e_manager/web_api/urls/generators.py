@@ -5,6 +5,7 @@ from django.conf.urls import url
 from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import ListView
 
@@ -137,7 +138,6 @@ def generate_delete_view(model_entity, verbose=False):
         model_entity,
         operation_name="delete",
         url_param_pattern="(?P<pk>[\d]+)",
-        is_multi_element_operation=False,
         verbose=verbose)
 
     return url(
@@ -145,6 +145,40 @@ def generate_delete_view(model_entity, verbose=False):
         DeleteView.as_view(
             model=model_entity,
             context_object_name="object",
+            template_name=generator_parameters.template_name,
+            success_url=reverse_lazy(generator_parameters.success_url),
+        ),
+        name=generator_parameters.url_pattern_name
+    )
+
+
+def generate_create_view(model_entity, verbose=False, fields="__all__"):
+    """
+    Generates a create view for a given class.
+    The model class' class_name will be extracted and lower cased.
+    The generated url pattern will be '^{class_name}s/create/$'.
+    The generated pattern name will be 'create_{class_name}'.
+    The generated html template file will be searched as  '{class_name}s/create.html'.
+    The context object will be named 'form' (since the context object is the create form)
+    The success url will be 'list_{class_name}s'
+
+    :param model_entity: Is the model class you want to generate a list view for
+    :param verbose: dictates whether you want additional output printed to see what gets generated.
+    :param fields: optionally allows to set which fields get included in the create-form. Default is "__all__"
+    :return: a url object containing the generated delete view
+    """
+    generator_parameters = deduce_generator_parameters(
+        model_entity,
+        operation_name="create",
+        verbose=verbose
+    )
+
+    return url(
+        generator_parameters.url_pattern,
+        CreateView.as_view(
+            model=model_entity,
+            context_object_name='form',
+            fields=fields,
             template_name=generator_parameters.template_name,
             success_url=reverse_lazy(generator_parameters.success_url),
         ),

@@ -1,0 +1,30 @@
+{% extends "../layout_delete.html" %}
+
+{% block subject %}
+    Producer
+{% endblock %}
+
+{% block object_representation %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ object.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ object.name }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
+
+{% block warnings %}
+    This will also delete
+    <ul>
+        <li>All FPGA models related to this producer</li>
+        <li>All FPGAs of the above models</li>
+        <li>All reservations made on above FPGAs</li>
+    </ul>
+    <br>
+{% endblock %}

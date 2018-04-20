@@ -1,18 +1,14 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DeleteView
+from django.views.generic import ListView
 
 from rc3e_manager.backend.models import Fpga, FpgaModel, Node, Producer, Programmer, RegionType, VFpga
 from rc3e_manager.web_api import views
+from rc3e_manager.web_api.urls.generators import generate_create_view
 from rc3e_manager.web_api.urls.generators import generate_delete_view
 from rc3e_manager.web_api.urls.generators import generate_list_view
 
 urlpatterns = [
-
-
-
-    # TODO All the update views
 
     # --- General purpose URLs ---
     url(r'^$', views.welcome, name="welcome"),
@@ -21,107 +17,31 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
 
     # --- Node-related URLs ---
-    generate_list_view(Node, True),
+    generate_create_view(Node, True),
     generate_delete_view(Node, True),
-
-    url(r'^nodes/create/',
-        CreateView.as_view(
-            model=Node,
-            context_object_name='form',
-            fields='__all__',
-            template_name='nodes/create.html',
-            success_url=reverse_lazy('list_nodes'),
-        ), name='add_node'),
+    generate_list_view(Node, True),
 
     # --- Producer-related URLs ---
-    url(r'^producers/list/',
-        ListView.as_view(
-            model=Producer,
-            context_object_name='object_list',
-            template_name="producers/list_producers.html"
-        ), name='list_producers'),
-
-    url(r'^producers/create/',
-        CreateView.as_view(
-            model=Producer,
-            context_object_name='form',
-            fields='__all__',
-            template_name='producers/create.html',
-            success_url=reverse_lazy('list_producers'),
-        ), name='add_producer'),
-
-    url(r'^producers/delete/(?P<pk>[\d]+)/$',
-        DeleteView.as_view(
-            model=Producer,
-            context_object_name='producer',
-            template_name='producers/delete_producer.html',
-            success_url=reverse_lazy('list_producers'),
-        ), name='delete_producer'),
+    generate_create_view(Producer, True),
+    generate_delete_view(Producer, True),
+    generate_list_view(Producer, True),
 
     # --- FPGA Model-related URLs ---
+    generate_create_view(FpgaModel, True),
+    generate_delete_view(FpgaModel, True),
     generate_list_view(FpgaModel, True),
 
-    url(r'^fpga_models/create/',
-        CreateView.as_view(
-            model=FpgaModel,
-            context_object_name='form',
-            fields='__all__',
-            template_name='fpga_models/create.html',
-            success_url=reverse_lazy('list_fpga_models'),
-        ), name='add_fpga_model'),
-
-    generate_delete_view(FpgaModel, True),
-
     # --- FPGA related URLs ---
+    url(r'^fpgas/create/$', views.create_fpga, name='create_fpga'),  # custom
+    generate_delete_view(Fpga, True),
+    generate_list_view(Fpga, True),
 
-    url(r'^fpgas/list/',
-        ListView.as_view(
-            model=Fpga,
-            context_object_name='object_list',
-            template_name="fpgas/list.html"
-        ), name='list_fpgas'),
-
-    url(r'^fpgas/create/',
-        views.create_fpga,
-        name='add_fpga'),
-
-    url(r'^fpgas/delete/(?P<pk>[\d]+)/$',
-        DeleteView.as_view(
-            model=Fpga,
-            context_object_name='object',
-            template_name='fpgas/delete.html',
-            success_url=reverse_lazy('list_fpgas'),
-        ), name='delete_fpga'),
-
-    url(r'^fpgas/show/(?P<pk>[\d]+)/$',
-        views.show_fpga,
-        name='show_fpga'),
+    url(r'^fpgas/show/(?P<pk>[\d]+)/$', views.show_fpga, name='show_fpga'),
 
     # --- Region Type related URLs ---
-
-    url(r'^region_types/create/',
-        CreateView.as_view(
-            model=RegionType,
-            context_object_name='form',
-            fields='__all__',
-            template_name='region_types/create.html',
-            success_url=reverse_lazy('list_region_types'),
-        ), name='add_region_type'),
-
-    url(r'^region_types/list/',
-        ListView.as_view(
-            model=RegionType,
-            context_object_name='object_list',
-            template_name="region_types/list_region_types.html"
-        ), name='list_region_types'),
-
-    url(r'^region_types/delete/(?P<pk>[\d]+)/$',
-        DeleteView.as_view(
-            model=RegionType,
-            context_object_name='region_type',
-            template_name='region_types/delete_region_type.html',
-            success_url=reverse_lazy('list_region_types'),
-        ), name='delete_region_type'),
+    generate_create_view(RegionType, True),
+    generate_delete_view(RegionType, True),
+    generate_list_view(RegionType, True),
 
     # --- Reservation related URLs ---
 
@@ -138,28 +58,7 @@ urlpatterns = [
         ), name='list_vfpgas'),
 
     # --- Programmer related URLs ---
-    url(r'^programmers/create/',
-        CreateView.as_view(
-            model=Programmer,
-            context_object_name='form',
-            fields='__all__',
-            template_name='programmers/create.html',
-            success_url=reverse_lazy('list_programmers'),
-        ), name='create_programmer'),
-
-    url(r'^programmers/delete/(?P<pk>[\d]+)/$',
-        DeleteView.as_view(
-            model=Programmer,
-            context_object_name='programmer',
-            template_name='programmers/delete.html',
-            success_url=reverse_lazy('list_programmers'),
-        ), name='delete_programmers'),
-
-    url(r'^programmers/list/',
-        ListView.as_view(
-            model=Programmer,
-            context_object_name='object_list',
-            template_name='programmers/list.html',
-        ), name='list_programmers'),
-
+    generate_create_view(Programmer, True),
+    generate_delete_view(Programmer, True),
+    generate_list_view(Programmer, True),
 ]
